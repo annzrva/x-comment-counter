@@ -1,73 +1,85 @@
-# 🔥 X Comment Counter
+# 🔥 Comment Counter
 
-Duolingo-style трекер активности на X. Считает твои **комментарии (реплаи)** и
-**посты** за день через [twitterapi.io](https://twitterapi.io), ведёт **стрик**
-(серию дней подряд, когда цель выполнена) и празднует достижение цели конфетти 🎉.
+A Duolingo-style tracker for your X (Twitter) reply grind. Type any handle and
+see that account's **replies (comments)**, **posts**, daily **streak**, and a
+contribution **heatmap** — with confetti when you hit the goal. 🎉
 
-**Цель дня по умолчанию:** 50 комментариев + 1 пост.
+**Live:** https://x-comment-counter.vercel.app — type any handle, no login.
 
-## Запуск
+Built by [@burninganna](https://x.com/burninganna). Open source.
 
+## Why
+Small accounts grow by replying every day — but the grind is invisible, so people
+quit. This turns it into a game: hit your daily goal, keep the streak alive, and
+watch the map go green.
+
+## The daily goal
+**20 replies + 1 post** keeps your streak alive (the day turns green). Hit the
+**30-reply stretch** for the brightest tile. Goals are configurable.
+
+## Use it
+Open the live site and type a handle (`@name`, `name`, or an `x.com/...` link).
+Shareable: a `?h=handle` link deep-links straight to an account.
+
+## Run locally
 ```bash
-cd ~/developer/"X comment counter"
 python3 app.py
 ```
-
-Откроется браузер с дашбордом. Кнопка **↻ Refresh** подтягивает свежие данные из X.
-
-Или двойной клик по **`start.command`** в Finder.
-
-Только терминал, без сервера:
+Opens a dashboard at http://127.0.0.1:8765. No dependencies — pure Python standard
+library. Quick CLI check without a server:
 ```bash
-python3 app.py --refresh
+python3 app.py --refresh yourhandle
+```
+You'll need a [twitterapi.io](https://twitterapi.io) key in `.env`:
+```
+TWITTERAPI_KEY=your_key_here
 ```
 
-## Что на дашборде
+## Self-host / deploy
+The app runs on Vercel (serverless) with an Upstash Redis cache. Full steps in
+**[DEPLOY.md](DEPLOY.md)**.
 
-- 🔥 **Огонёк-стрик** — сколько дней подряд цель выполнена (тускнеет, если стрик = 0).
-- 💬 / 📝 **Кольца прогресса** — комментарии и посты за сегодня против цели.
-- 🎉 **Конфетти + тост** — когда впервые за сессию закрыта дневная цель.
-- 🗓 **Календарь 14 дней** — зелёный = цель выполнена, тёмно-зелёный = была активность,
-  золотая рамка = сегодня. Наведи курсор для деталей.
-- 🏆 **Best streak** — рекордная серия.
+## What's on the dashboard
+- 🔥 **Streak** — consecutive days the goal was met (dims to 0 when broken).
+- 💬 / 📝 **Progress bars** — today's replies and posts vs. the goal.
+- 🗓 **14-day heatmap** — green = goal met, yellow = active but short of goal,
+  empty = nothing. Hover for details.
+- 🏆 **Best streak** — your record.
+- 📸 **Share card** — a PNG to post on X ("can you beat my streak?").
 
-## Настройка
+## How replies are counted
+Via twitterapi.io advanced search: `from:<handle> filter:replies` for comments and
+`from:<handle> -filter:replies` for posts. Each tweet's timestamp maps to a local
+day. Numbers can shift slightly between refreshes — that's normal, data comes
+straight from X.
 
-Файл `config.json` (создаётся автоматически):
+## Cost controls (public-safe)
+- `cache_ttl_minutes` (360) — a handle's data is reused for 6h; repeat / shared
+  views are free.
+- `new_handle_backfill_days` (14) — history depth fetched the first time a handle
+  is seen.
+- `daily_call_cap` (1500) — hard ceiling on API calls per day; past it, cached
+  handles still load and new lookups get a "try tomorrow" message.
 
+## Config
+`config.json` (optional — sensible defaults are built in):
 ```json
 {
   "handle": "burninganna",
-  "comments_goal": 50,
+  "comments_goal": 20,
+  "comments_stretch": 30,
   "posts_goal": 1,
-  "lookback_days": 4,
   "timezone_offset_hours": null
 }
 ```
 
-- `handle` — чей аккаунт считать (без @).
-- `comments_goal` / `posts_goal` — дневные цели.
-- `lookback_days` — сколько дней пере-считывать при каждом обновлении (старые дни
-  остаются в истории `data.json`).
-- `timezone_offset_hours` — `null` = системное локальное время; число = смещение от UTC.
+## Files
+- `api/_core.py` — all logic: API counting, streak, KV-aware storage, HTTP handler.
+- `app.py` — thin local-dev entrypoint (re-exports `_core`).
+- `api/lookup.py`, `api/img.py` — Vercel serverless functions.
+- `index.html` — the dashboard (vanilla JS, canvas confetti).
+- `pyproject.toml`, `vercel.json` — deploy config.
 
-## Файлы
-
-- `app.py` — сервер + подсчёт через API + логика стриков (stdlib, без зависимостей).
-- `index.html` — дашборд (vanilla JS, конфетти на canvas).
-- `data.json` — история по дням и время последнего обновления (растёт со временем).
-- `config.json` — настройки.
-- `.env` — ключ `TWITTERAPI_KEY` (тот же, что в `X growth`).
-
-## Как считаются комменты
-
-Через advanced search: `from:<handle> filter:replies` для комментов и
-`from:<handle> -filter:replies` для постов. Дата каждого твита переводится в
-локальный день. Числа могут немного меняться при обновлении — это нормально,
-данные берутся напрямую из X.
-
-## Идеи на потом
-
-- Авто-обновление по таймеру / cron, пуш-уведомление если цель не закрыта к вечеру.
-- Виджет в строке меню macOS.
-- Учёт активности по нескольким аккаунтам (@vargastartup, @vargaiHQ).
+## Tech
+Pure Python standard library (no deps). Vercel + Upstash Redis in production, local
+files in dev — switched automatically by env vars.

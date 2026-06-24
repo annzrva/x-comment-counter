@@ -14,3 +14,6 @@ __pycache__/
 _cardtest.*
 .vercel
 .env*
+
+# private launch notes — not for the public repo
+LAUNCH.md

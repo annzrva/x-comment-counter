@@ -1,0 +1,17 @@
+{
+  "handle": "burninganna",
+  "comments_goal": 20,
+  "comments_stretch": 30,
+  "posts_goal": 1,
+  "lookback_days": 4,
+  "graph_days": 90,
+  "exceed_multiplier": 1.5,
+  "timezone_offset_hours": null,
+  "author": "burninganna",
+  "site_url": "",
+  "share_cta": "Can you beat my streak?",
+  "cache_ttl_minutes": 360,
+  "new_handle_backfill_days": 14,
+  "daily_call_cap": 1500,
+  "rate_per_ip_per_min": 8
+}

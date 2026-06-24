@@ -1,0 +1,13 @@
+[project]
+name = "x-comment-counter"
+version = "1.0.0"
+description = "Duolingo-style X reply/streak tracker"
+requires-python = ">=3.9"
+dependencies = []          # standard library only
+
+[tool.uv]
+package = false            # this is an app, not an installable package
+
+[tool.vercel]
+# single HTTP entrypoint — _core.Handler routes /, /api/lookup, /img and serves index.html
+entrypoint = "api._core:Handler"

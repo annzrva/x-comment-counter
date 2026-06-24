@@ -1,0 +1,16 @@
+# secrets — never commit your API key
+.env
+
+# personal data (history / streak / profile cache) — per-handle + legacy + budget
+data.json
+data/
+usage.json
+
+# python / macOS / build junk
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+_cardtest.*
+.vercel
+.env*

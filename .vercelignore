@@ -1,0 +1,14 @@
+.env
+.env.example
+data/
+data.json
+usage.json
+__pycache__/
+*.pyc
+.DS_Store
+STATUS.md
+start.command
+
+# local-dev entrypoint only — Vercel functions import api/_core directly
+app.py
+config.json

@@ -1,7 +1,7 @@
 {
   "handle": "burninganna",
-  "comments_goal": 20,
-  "comments_stretch": 30,
+  "comments_goal": 10,
+  "comments_stretch": 20,
   "posts_goal": 1,
   "lookback_days": 4,
   "graph_days": 90,

@@ -47,8 +47,8 @@ IMG_HOSTS = {"pbs.twimg.com", "abs.twimg.com"}
 
 DEFAULT_CONFIG = {
     "handle": "burninganna",      # owner handle (CLI default + "made by" credit)
-    "comments_goal": 20,          # streak floor: hit this (+post) to keep the streak alive
-    "comments_stretch": 30,       # stretch goal: hit this for the brightest graph tile
+    "comments_goal": 10,          # streak floor: hit this (+post) to keep the streak alive
+    "comments_stretch": 20,       # stretch goal: hit this for the brightest graph tile
     "posts_goal": 1,
     "lookback_days": 4,           # days re-fetched on each quick refresh
     "graph_days": 90,             # contribution graph window (90 = quarter, 365 = year)

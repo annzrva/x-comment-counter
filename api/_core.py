@@ -53,7 +53,8 @@ DEFAULT_CONFIG = {
     "lookback_days": 4,           # days re-fetched on each quick refresh
     "graph_days": 90,             # contribution graph window (90 = quarter, 365 = year)
     "exceed_multiplier": 1.5,     # comments >= goal*this => "exceeded" (brightest green)
-    "timezone_offset_hours": None,
+    "timezone_name": "America/Los_Angeles",  # IANA tz for the day boundary (DST-aware); owner's tz
+    "timezone_offset_hours": None,           # fixed-offset fallback if timezone_name is unset/unavailable
     "author": "burninganna",      # creator handle for the "made by" credit / follow link
     "site_url": "",               # no extra branding — credit is just the @author link
     "share_cta": "Can you beat my streak?",
@@ -278,10 +279,23 @@ def user_info(handle):
 # ── date helpers ──────────────────────────────────────────────────────────
 
 def local_tz(cfg):
+    """Resolve the tz used to bucket tweets into days and to define "today".
+
+    Priority: IANA name (DST-aware) → fixed UTC offset → server local tz.
+    The server-tz fallback is UTC on Vercel, which rolls "today" over at the
+    wrong moment for the owner — so pin timezone_name in config.json.
+    """
+    name = cfg.get("timezone_name")
+    if name:
+        try:
+            from zoneinfo import ZoneInfo
+            return ZoneInfo(name)
+        except Exception:
+            pass
     off = cfg.get("timezone_offset_hours")
-    if off is None:
-        return datetime.now().astimezone().tzinfo
-    return timezone(timedelta(hours=off))
+    if off is not None:
+        return timezone(timedelta(hours=off))
+    return datetime.now().astimezone().tzinfo
 
 
 def parse_created(created_at):

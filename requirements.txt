@@ -1,0 +1,4 @@
+# IANA timezone database for zoneinfo — Vercel's Python image may ship without
+# system tzdata, so include it to keep the day-boundary tz (config timezone_name)
+# working in production. App code itself is still standard-library only.
+tzdata

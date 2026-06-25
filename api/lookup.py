@@ -15,9 +15,10 @@ class handler(BaseHTTPRequestHandler):
         cfg = app.load_config()
         handle = app.sanitize_handle(qs.get("handle", [cfg["handle"]])[0])
         force = qs.get("force", ["0"])[0] in ("1", "true", "yes")
+        cached_only = qs.get("cached", ["0"])[0] in ("1", "true", "yes")
         c = app._with_graph(cfg, qs)
         try:
-            body, code = json.dumps(app.lookup(c, handle, force=force)), 200
+            body, code = json.dumps(app.lookup(c, handle, force=force, cached_only=cached_only)), 200
         except app.InvalidHandle as e:
             body, code = json.dumps({"error": str(e), "invalid_handle": True}), 200
         except app.BudgetExceeded as e:

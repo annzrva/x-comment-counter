@@ -336,6 +336,21 @@ const cleanHandle=h=>(h||'').trim().replace(/^.*[\/@]/,'').replace(/[^A-Za-z0-9_
 
 function setSearchState(cls){const f=$('search'); f.classList.remove('busy','err'); if(cls) f.classList.add(cls);}
 
+async function fetchState({cached,force}={}){
+  const q=new URLSearchParams();
+  if(CUR)q.set('handle',CUR);
+  if(force)q.set('force','1');
+  if(cached)q.set('cached','1');
+  const r=await fetch('/api/lookup?'+q.toString());
+  return r.json();
+}
+function applyState(s){
+  STATE=s; CUR=s.handle;
+  localStorage.setItem('ccx_handle',CUR);
+  const nu=new URL(location); nu.searchParams.set('h',CUR); history.replaceState(null,'',nu);
+  $('handle-in').value=CUR;
+  render(s);
+}
 async function loadHandle(handle, force, btn){
   const h=cleanHandle(handle);
   if(handle && !h){setSearchState('err'); return;}
@@ -343,20 +358,26 @@ async function loadHandle(handle, force, btn){
   if(btn){btn.disabled=true;btn.dataset.t=btn.textContent;btn.textContent='…';}
   setSearchState('busy');
   try{
-    const q=new URLSearchParams(); if(CUR)q.set('handle',CUR); if(force)q.set('force','1');
-    const r=await fetch('/api/lookup?'+q.toString());
-    const s=await r.json();
+    // Phase 1: paint instantly from cache (no twitterapi.io call server-side).
+    // Skipped on an explicit Refresh (force) — that wants truly fresh numbers.
+    if(!force){
+      const s0=await fetchState({cached:true});
+      if(s0 && !s0.error){
+        setSearchState();
+        applyState(s0);
+        if(s0.fresh) return;                       // cache fresh → nothing more to do
+        $('synced-t').textContent='updating…';     // stale → revalidate in background
+      }
+    }
+    // Phase 2: real lookup — may hit the API (the slow path), now off the critical render.
+    const s=await fetchState({force});
     if(s.error){
       setSearchState('err');
       $('synced-t').textContent=(s.invalid_handle?'':'error · ')+s.error;
       return;
     }
     setSearchState();
-    STATE=s; CUR=s.handle;
-    localStorage.setItem('ccx_handle',CUR);
-    const nu=new URL(location); nu.searchParams.set('h',CUR); history.replaceState(null,'',nu);
-    $('handle-in').value=CUR;
-    render(s);
+    applyState(s);
     if(s.note==='budget') $('synced-t').textContent='cached (daily limit reached)';
   }catch(e){setSearchState('err'); $('synced-t').textContent='error · '+e.message;}
   finally{if(btn){btn.disabled=false;btn.textContent=btn.dataset.t;}}

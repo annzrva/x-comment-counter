@@ -528,8 +528,14 @@ def is_fresh(data, cfg):
     return (now - t).total_seconds() < cfg.get("cache_ttl_minutes", 360) * 60
 
 
-def lookup(cfg, handle, force=False):
-    """Return state for a handle, hitting the API only when cache is stale/empty."""
+def lookup(cfg, handle, force=False, cached_only=False):
+    """Return state for a handle, hitting the API only when cache is stale/empty.
+
+    cached_only: serve whatever is stored without calling twitterapi.io, even
+    if it's stale — so the page paints instantly. The frontend then calls again
+    (without this flag) to revalidate in the background. We still fetch when
+    there is no cache at all (a handle's very first view has nothing to show).
+    """
     handle = sanitize_handle(handle)
     if not handle:
         raise InvalidHandle("Enter an X handle.")
@@ -537,7 +543,7 @@ def lookup(cfg, handle, force=False):
     has_cache = bool(data.get("days"))
     note = None
     served_cached = True
-    if force or not is_fresh(data, cfg):
+    if (force or not is_fresh(data, cfg)) and not (cached_only and has_cache):
         try:
             data = refresh(cfg, handle, data) if has_cache else first_fetch(cfg, handle, data)
             served_cached = False
@@ -622,16 +628,18 @@ class Handler(BaseHTTPRequestHandler):
     def _lookup(self, cfg, qs):
         handle = sanitize_handle(qs.get("handle", [cfg["handle"]])[0])
         force = qs.get("force", ["0"])[0] in ("1", "true", "yes")
+        cached_only = qs.get("cached", ["0"])[0] in ("1", "true", "yes")
         c = _with_graph(cfg, qs)
         # rate-limit only calls that may hit the API (no cache yet, or forced)
-        will_fetch = force or not is_fresh(load_data(handle), cfg)
+        data0 = load_data(handle)
+        will_fetch = (force or not is_fresh(data0, cfg)) and not (cached_only and data0.get("days"))
         if will_fetch:
             ip = self.client_address[0]
             if not _rate_ok(ip, cfg):
                 self._send(429, json.dumps({"error": "Slow down a sec — too many lookups."}))
                 return
         try:
-            self._send(200, json.dumps(lookup(c, handle, force=force)))
+            self._send(200, json.dumps(lookup(c, handle, force=force, cached_only=cached_only)))
         except InvalidHandle as e:
             self._send(200, json.dumps({"error": str(e), "invalid_handle": True}))
         except BudgetExceeded as e:

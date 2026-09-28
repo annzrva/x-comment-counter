@@ -2,6 +2,47 @@
 
 **Created:** 2026-06-22
 
+## 🔴 BROKEN — diagnosis (2026-09-27)
+Symptom: https://x-comment-counter.vercel.app loads, but every lookup returns
+`"@<handle> — no such X account"` (even @burninganna, which exists).
+- The local TWITTERAPI_KEY (.env) works: user/info for burninganna → success.
+- `vercel integration list` → **No resources found**: the Upstash Redis store is no longer attached
+  to the project (likely deleted or archived after ~3 months idle), but the KV_* env vars are still set.
+  So prod still takes the Redis code path, and every Redis call fails.
+- In code, errors are swallowed: `load_data` returns empty on any KV error, and `fetch_profile` returns None
+  on *any* exception (including the failed `INCR` in `_record_call`) → shows up as "no such account".
+- Not yet verified: whether the prod TWITTERAPI_KEY (Sensitive, cannot be pulled) still works / has balance.
+Fix: reconnect Upstash (Marketplace) → refresh the KV env vars; set the prod key to the working local one;
+stop swallowing errors in fetch_profile (only real 404 → invalid_handle); redeploy.
+
+## Launch video (2026-06-24) — ✅ rendered
+- HyperFrames composition in `launch-video/` — 5-scene vertical promo (1080×1920, 25s).
+  Story: the void → invisible grind → "a Duolingo for your replies" → triumph (heatmap +
+  streak) → "type any handle, free, no login" + URL.
+- Y2K/kawaii aesthetic matching the app (pastel gradient, Fredoka, emoji sprinkles, crossfades).
+- **Fredoka embedded locally** (`fonts/fredoka-latin.woff2`, variable woff2) for deterministic render.
+- Contrast bumped on green/blue/pink accents. Lint clean (0/0).
+- **Music**: bubbly hyperpop, generated via **varg** (`music_v1`, ElevenLabs, 25s, ~30 credits).
+  Track `launch-video/music.mp3`. Added as a separate `<audio>` track (data-volume 0.85).
+- **Outputs** (both 30fps, high quality):
+  - Vertical 9:16 (1080×1920): `…launch.mp4` (silent) · **`…launch-music.mp4`** (5.5 MB, with music) ✅
+  - Landscape 16:9 (1920×1080): `…launch-16x9.mp4` (silent) · **`…launch-16x9-music.mp4`** (5.7 MB, with music) ✅
+    (re-laid-out composition in `launch-video/landscape/`).
+  - All in `launch-video/renders/`. The `-music` files are the final deliverables.
+- **Product reveal + personal copy (landscape only)**: scene 4's abstract heatmap replaced with a
+  real dashboard screenshot (`launch-video/landscape/app-shot.jpg`) in a browser frame.
+  Screencast version to be recorded later (Anna). Vertical 9:16 left as-is (desktop shot ≠ portrait).
+- **v4 (current cut, 2026-06-25)**: simplified to **4 slides, ~2s each, ~9.5s total**, snappy.
+  1) "engaging with other people / builds real relationships on X." 2) "the ratio i'm aiming for"
+  → 10 : 1 (count-up). 3) "so i built a tracker." + dashboard + ✓ goal-hit sticker.
+  4) "made it for me." / "but you can try too →" + URL + @burninganna.
+  Music trimmed to 9.5s w/ fade (`landscape/music-short.mp3`).
+  → **`launch-video/renders/x-comment-counter-launch-16x9-v4.mp4`** (3.9 MB). ✅ FINAL landscape cut.
+  Earlier longer cuts kept in `renders/` for reference (v2 25s, v3 21s, -product).
+- **Post copy** (Anna's final, English): "engaging with other people is how you actually build
+  relationships on X / so i built myself a tiny tracker to stay consistent / made it for me,
+  but you can try too 👇 + URL".
+
 ## v6 (2026-06-24) — 🟢 LIVE on Vercel
 **Public URL: https://x-comment-counter.vercel.app** (no login, public).
 - Vercel project `x-comment-counter`.

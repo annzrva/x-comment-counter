@@ -346,10 +346,15 @@ def fetch_counts(handle, since_dt, tz, max_pages, want_posts=True):
 
 
 def fetch_profile(handle):
+    # Only a genuine "user not found" means the handle is bad. Anything else
+    # (dead Redis, budget cap, bad API key, network) must surface as a real
+    # error, not be disguised as "no such X account".
     try:
         raw = user_info(handle)
-    except Exception:
-        return None
+    except RuntimeError as e:
+        if "not found" in str(e).lower():
+            return None
+        raise
     u = raw.get("data", raw) if isinstance(raw, dict) else {}
     if not u:
         return None

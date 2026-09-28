@@ -326,7 +326,12 @@ const SFX={
   disc:()=>{arp([660,990,1320],.045,'sawtooth',.11); tone(200,.55,'sawtooth',.09,90);}, // spin zap + sweep
   celebrate:()=>arp([523,659,784,1047,1319,1568],.08,'triangle',.17), // tada
   click:()=>tone(640,.05,'sine',.1),
+  // live: someone just replied / posted on X. i-th new comment climbs in pitch.
+  comment:(i=0)=>{const k=Math.pow(1.122,Math.min(i,8)); tone(420*k,.16,'square',.16,860*k);},
+  post:()=>{SFX.disc(); arp([1175,1568,2093],.06,'triangle',.12);},
 };
+// browsers only allow audio after a user gesture — unlock on the first tap/key
+['pointerdown','keydown'].forEach(ev=>addEventListener(ev,()=>{ if(!muted) AC(); },{once:true}));
 
 let CUR=(localStorage.getItem('ccx_handle')||'').trim();
 const cleanHandle=h=>(h||'').trim().replace(/^.*[\/@]/,'').replace(/[^A-Za-z0-9_]/g,'').slice(0,15).toLowerCase();
@@ -336,15 +341,30 @@ const cleanHandle=h=>(h||'').trim().replace(/^.*[\/@]/,'').replace(/[^A-Za-z0-9_
 
 function setSearchState(cls){const f=$('search'); f.classList.remove('busy','err'); if(cls) f.classList.add(cls);}
 
-async function fetchState({cached,force}={}){
+async function fetchState({cached,force,live}={}){
   const q=new URLSearchParams();
   if(CUR)q.set('handle',CUR);
   if(force)q.set('force','1');
   if(cached)q.set('cached','1');
+  if(live)q.set('live','1');
   const r=await fetch('/api/lookup?'+q.toString());
   return r.json();
 }
+// Ding when today's numbers go up for the same handle (not on first load / handle switch).
+let LAST=null;
+function chime(s){
+  const t=s.today, prev=LAST;
+  LAST={h:s.handle,d:t.date,c:t.comments,p:t.posts};
+  if(!prev||prev.h!==s.handle||prev.d!==t.date) return;
+  const nc=Math.min(t.comments-prev.c,6), np=t.posts-prev.p;
+  for(let i=0;i<nc;i++) setTimeout(()=>{SFX.comment(i);
+    $('c-num').classList.add('pop');setTimeout(()=>$('c-num').classList.remove('pop'),520);
+    emitSmileys($('c-num'));},i*260);
+  if(np>0) setTimeout(()=>{SFX.post();emitDisc($('p-num'));
+    $('p-num').classList.add('pop');setTimeout(()=>$('p-num').classList.remove('pop'),520);},Math.max(0,nc)*260+150);
+}
 function applyState(s){
+  try{chime(s);}catch(e){}
   STATE=s; CUR=s.handle;
   localStorage.setItem('ccx_handle',CUR);
   const nu=new URL(location); nu.searchParams.set('h',CUR); history.replaceState(null,'',nu);
@@ -703,6 +723,18 @@ $('mute').onclick=()=>{muted=!muted;localStorage.setItem('ccx_muted',muted?'1':'
 $('mute').textContent=muted?'🔇':'🔊';
 // load the handle from the URL / last-used / owner default (cache-or-fetch on the server)
 loadHandle(CUR, false);
+
+// live mode: poll today's numbers every 2 min while the tab is open (even in the
+// background, so you hear the ding while you're on X). Sleeps after 3h idle.
+const LIVE_MS=120000, IDLE_MS=3*3600e3;
+let lastActive=Date.now(), polling=false;
+['pointerdown','keydown','visibilitychange'].forEach(ev=>addEventListener(ev,()=>{lastActive=Date.now();}));
+setInterval(async()=>{
+  if(polling||!CUR||!STATE||Date.now()-lastActive>IDLE_MS) return;
+  polling=true;
+  try{const s=await fetchState({live:true}); if(s&&!s.error&&s.handle===CUR) applyState(s);}
+  catch(e){} finally{polling=false;}
+},LIVE_MS);
 </script>
 </body>
 </html>

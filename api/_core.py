@@ -400,18 +400,21 @@ def first_fetch(cfg, handle, data):
     return data
 
 
-def refresh(cfg, handle, data):
-    """Quick top-up of the last few days for a handle we already track."""
+def refresh(cfg, handle, data, live=False):
+    """Quick top-up of the last few days for a handle we already track.
+
+    live: the page's 2-minute poll — only today, no profile (2 API calls).
+    """
     handle = sanitize_handle(handle)
     tz = local_tz(cfg)
-    since = _midnight_since(tz, cfg["lookback_days"])
-    fresh = fetch_counts(handle, since, tz, 40)
+    since = _midnight_since(tz, 0 if live else cfg["lookback_days"])
+    fresh = fetch_counts(handle, since, tz, 5 if live else 40)
     data.setdefault("days", {})
     for k, v in fresh.items():
         data["days"][k] = v
     today = datetime.now(tz).strftime("%Y-%m-%d")
     data["days"].setdefault(today, {"comments": 0, "posts": 0})
-    prof = fetch_profile(handle)
+    prof = None if live else fetch_profile(handle)
     if prof:
         data["profile"] = prof
     data["last_refresh"] = datetime.now(tz).isoformat(timespec="seconds")
@@ -536,7 +539,7 @@ def is_fresh(data, cfg):
     return (now - t).total_seconds() < cfg.get("cache_ttl_minutes", 360) * 60
 
 
-def lookup(cfg, handle, force=False, cached_only=False):
+def lookup(cfg, handle, force=False, cached_only=False, live=False):
     """Return state for a handle, hitting the API only when cache is stale/empty.
 
     cached_only: serve whatever is stored without calling twitterapi.io, even
@@ -553,7 +556,7 @@ def lookup(cfg, handle, force=False, cached_only=False):
     served_cached = True
     if (force or not is_fresh(data, cfg)) and not (cached_only and has_cache):
         try:
-            data = refresh(cfg, handle, data) if has_cache else first_fetch(cfg, handle, data)
+            data = refresh(cfg, handle, data, live=live) if has_cache else first_fetch(cfg, handle, data)
             served_cached = False
         except BudgetExceeded:
             if not has_cache:
@@ -637,6 +640,8 @@ class Handler(BaseHTTPRequestHandler):
         handle = sanitize_handle(qs.get("handle", [cfg["handle"]])[0])
         force = qs.get("force", ["0"])[0] in ("1", "true", "yes")
         cached_only = qs.get("cached", ["0"])[0] in ("1", "true", "yes")
+        live = qs.get("live", ["0"])[0] in ("1", "true", "yes")
+        force = force or live
         c = _with_graph(cfg, qs)
         # rate-limit only calls that may hit the API (no cache yet, or forced)
         data0 = load_data(handle)
@@ -647,7 +652,7 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(429, json.dumps({"error": "Slow down a sec — too many lookups."}))
                 return
         try:
-            self._send(200, json.dumps(lookup(c, handle, force=force, cached_only=cached_only)))
+            self._send(200, json.dumps(lookup(c, handle, force=force, cached_only=cached_only, live=live)))
         except InvalidHandle as e:
             self._send(200, json.dumps({"error": str(e), "invalid_handle": True}))
         except BudgetExceeded as e:

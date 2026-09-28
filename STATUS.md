@@ -2,18 +2,18 @@
 
 **Created:** 2026-06-22
 
-## 🔴 BROKEN — diagnosis (2026-09-27)
-Symptom: https://x-comment-counter.vercel.app loads, but every lookup returns
-`"@<handle> — no such X account"` (even @burninganna, which exists).
-- The local TWITTERAPI_KEY (.env) works: user/info for burninganna → success.
-- `vercel integration list` → **No resources found**: the Upstash Redis store is no longer attached
-  to the project (likely deleted or archived after ~3 months idle), but the KV_* env vars are still set.
-  So prod still takes the Redis code path, and every Redis call fails.
-- In code, errors are swallowed: `load_data` returns empty on any KV error, and `fetch_profile` returns None
-  on *any* exception (including the failed `INCR` in `_record_call`) → shows up as "no such account".
-- Not yet verified: whether the prod TWITTERAPI_KEY (Sensitive, cannot be pulled) still works / has balance.
-Fix: reconnect Upstash (Marketplace) → refresh the KV env vars; set the prod key to the working local one;
-stop swallowing errors in fetch_profile (only real 404 → invalid_handle); redeploy.
+## 🟢 FIXED & LIVE again (2026-09-27)
+**Cause of the outage:** the Upstash Redis store (`upstash-kv-pink-xylophone`) got uninstalled while the KV_* env vars stayed,
+and the code swallowed errors → every lookup said "no such X account".
+**Done:**
+- Removed stale KV_* / REDIS_URL vars; provisioned new **Upstash for Redis `x-comment-counter-kv`** (team *Anna's projects*, free) and connected it.
+  ⚠️ The project lives in the **annas-projects-4b7957a4** team, not vargai — use `--scope=annas-projects-4b7957a4` for integration commands.
+- Prod `TWITTERAPI_KEY` replaced with the working local key (the old prod one could not be verified).
+- `fetch_profile`: only a real "user not found" → invalid_handle; other errors surface as a 500 with the real message.
+- **Found & fixed a data leak:** `dict(_EMPTY)` shallow copy → on a reused Fluid instance a new/non-existent handle
+  showed the previous handle's history. Now `_empty()` returns a fresh dict.
+- Seeded @burninganna history (local 81 days) + `--backfill 96` → 106 active days in KV.
+- Deployed (`npx vercel deploy --prod --yes`) and verified in prod: burninganna ✅, levelsio ✅, fake handle → proper invalid_handle ✅.
 
 ## Launch video (2026-06-24) — ✅ rendered
 - HyperFrames composition in `launch-video/` — 5-scene vertical promo (1080×1920, 25s).

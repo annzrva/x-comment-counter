@@ -2,6 +2,14 @@
 
 **Created:** 2026-06-22
 
+## 🔔 Live sounds (2026-09-27) — LIVE
+- While the page is open (even in a background tab) it polls `/api/lookup?live=1` every **2 min**.
+  Live mode = today only, no profile fetch → ~4 twitterapi.io calls per poll. Sleeps after **3h** without interaction on the page.
+- New comment → "boing" pop (the smiley sound) that climbs in pitch per extra comment, plus a smiley burst.
+  New post → the disc zap + sparkle, plus a disc burst.
+- Sounds unlock after the first tap/key on the page (browser autoplay rule); 🔊/🔇 toggle respected.
+- Delay: up to ~2 min + twitterapi.io indexing lag. Instant would need a browser extension on x.com (idea).
+
 ## 🟢 FIXED & LIVE again (2026-09-27)
 **Cause of the outage:** the Upstash Redis store (`upstash-kv-pink-xylophone`) got uninstalled while the KV_* env vars stayed,
 and the code swallowed errors → every lookup said "no such X account".

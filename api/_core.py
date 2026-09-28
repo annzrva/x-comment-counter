@@ -140,7 +140,10 @@ def kv_cmd(*args):
         return json.loads(r.read().decode()).get("result")
 
 
-_EMPTY = {"days": {}, "last_refresh": None}
+def _empty():
+    # Fresh dict each time: a shared nested "days" dict would leak one handle's
+    # history into the next new handle on a reused (Fluid Compute) instance.
+    return {"days": {}, "last_refresh": None}
 
 
 def load_data(handle):
@@ -148,9 +151,9 @@ def load_data(handle):
     if _use_kv():
         try:
             raw = kv_cmd("GET", "cc:data:" + handle)
-            return json.loads(raw) if raw else dict(_EMPTY)
+            return json.loads(raw) if raw else _empty()
         except Exception:
-            return dict(_EMPTY)
+            return _empty()
     p = data_path(handle)
     if os.path.exists(p):
         try:
@@ -158,7 +161,7 @@ def load_data(handle):
                 return json.load(f)
         except Exception:
             pass
-    return dict(_EMPTY)
+    return _empty()
 
 
 def save_data(handle, data):

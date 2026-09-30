@@ -139,6 +139,59 @@
   .heat-grid{display:grid;grid-template-columns:repeat(14,1fr);gap:6px}
   .heat-grid .d{aspect-ratio:1;border-radius:8px;border:1.5px solid rgba(255,255,255,.8)}
 
+  /* road to 10k */
+  .road{background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,214,240,.5));border:2px solid rgba(255,255,255,.95);
+    border-radius:24px;box-shadow:0 10px 26px rgba(255,110,199,.22),inset 0 2px 0 rgba(255,255,255,.9);
+    padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+  .road .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .road .t{font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#a0306f}
+  .road .n{font-size:34px;font-weight:700;line-height:.9;color:#b23a82}
+  .road .n small{font-size:15px;color:#b8709a;font-weight:600}
+  .track.f{height:16px;box-shadow:inset 0 2px 4px rgba(180,60,130,.2)}
+  .track.f i{background:linear-gradient(180deg,#ffc2ea,#ff6fc4);box-shadow:inset 0 2px 0 rgba(255,255,255,.7)}
+  .track.f .ms{position:absolute;top:-2px;bottom:-2px;width:3px;background:#fff;border-radius:2px;box-shadow:0 0 0 1px rgba(180,60,130,.35)}
+  .road .sub{font-size:13px;font-weight:600;color:#7a4a6a;line-height:1.45}
+  .wk{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;align-items:end;height:92px;margin-top:4px}
+  .wk .col2{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+  .wk .bars{display:flex;gap:3px;align-items:flex-end;height:64px}
+  .wk .bars i{display:block;width:9px;border-radius:5px 5px 2px 2px;min-height:2px}
+  .wk .bars i.c{background:linear-gradient(180deg,#c4ff8a,#6fd83a)}
+  .wk .bars i.g{background:linear-gradient(180deg,#ffc2ea,#ff6fc4)}
+  .wk .lb{font-size:10px;font-weight:600;color:#8a6a86}
+  .legend{display:flex;gap:14px;font-size:11px;font-weight:600;color:#7a4a6a}
+  .legend b{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+  .play{background:rgba(255,255,255,.5);border:2px solid rgba(255,255,255,.9);border-radius:22px;
+    box-shadow:0 8px 22px rgba(60,100,200,.18),inset 0 2px 0 rgba(255,255,255,.9);padding:14px 20px}
+  .play summary{cursor:pointer;font-size:13px;font-weight:600;letter-spacing:.5px;color:#33457a;list-style:none}
+  .play summary::-webkit-details-marker{display:none}
+  .play ol{margin:10px 0 2px 20px;display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:500;color:#33457a;line-height:1.4}
+  .play ol b{font-weight:700}
+
+  /* reply queue */
+  .queue{background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(210,240,255,.55));border:2px solid rgba(255,255,255,.95);
+    border-radius:24px;box-shadow:0 10px 26px rgba(60,140,220,.22),inset 0 2px 0 rgba(255,255,255,.9);
+    padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+  .queue .qh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .queue .t{font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2a6aa3}
+  .queue .meta{font-size:12px;font-weight:600;color:#5a85aa}
+  .queue .ctl{display:flex;gap:8px;align-items:center;font-size:12px;font-weight:600;color:#5a85aa}
+  .queue .ctl button.b{padding:6px 14px;font-size:12px}
+  .qlist{display:flex;flex-direction:column;gap:10px;max-height:640px;overflow-y:auto;padding-right:4px}
+  .qi{display:flex;gap:10px;background:rgba(255,255,255,.75);border:1.5px solid #fff;border-radius:16px;padding:10px 12px;
+    box-shadow:0 3px 10px rgba(60,100,200,.1);transition:opacity .2s}
+  .qi.opened{opacity:.55} .qi.done{opacity:.35}
+  .qi .av{width:36px;height:36px;border-radius:50%;flex:none;background:#dbefff center/cover;border:2px solid #fff}
+  .qi .bd{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+  .qi .who{font-size:13px;font-weight:700;color:#1d2b4a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .qi .who span{font-weight:500;color:#7e8bbf}
+  .qi .tx{font-size:13px;font-weight:500;color:#33457a;line-height:1.35;overflow-wrap:anywhere;
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .qi .ac{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px;font-weight:600;color:#5a85aa}
+  .qi .ac a{color:#fff;text-decoration:none;background:linear-gradient(180deg,#7ad0ff,#2a8fe0);border:1.5px solid rgba(255,255,255,.8);
+    border-radius:999px;padding:4px 12px;box-shadow:0 3px 8px rgba(40,120,210,.3)}
+  .qi .ac .sk{cursor:pointer;color:#9aa6cf}
+  .qi .hot{color:#e0457b}
+
   .footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
   .footer .synced{font-size:13px;font-weight:500;color:#33457a}
   .btns{display:flex;gap:12px;flex-wrap:wrap}
@@ -234,10 +287,10 @@
       <div class="row">
         <div>
           <div class="lbl">💬 Comments</div>
-          <div class="goalline" id="goalline">20 comments + 1 post / day</div>
+          <div class="goalline" id="goalline">150 comments + 1 post / day</div>
           <div class="statuspill" id="c-status">—</div>
         </div>
-        <div class="bignum" id="c-num"><b id="c-val">0</b><span class="of" id="c-of">/20</span></div>
+        <div class="bignum" id="c-num"><b id="c-val">0</b><span class="of" id="c-of">/150</span></div>
       </div>
       <div class="track c"><i id="c-bar"></i></div>
     </div>
@@ -267,6 +320,40 @@
       <div class="h">✨ Last 14 days</div>
       <div class="heat-grid" id="heat"></div>
     </div>
+
+    <!-- reply queue (owner lists only: targets.json) -->
+    <div class="queue" id="queue" style="display:none">
+      <div class="qh">
+        <div><div class="t">🎯 Reply queue</div><div class="meta" id="q-meta">—</div></div>
+        <div class="ctl"><label><input type="checkbox" id="q-hide" checked> hide done</label>
+          <button class="b b-white" id="q-ref">↻ Fresh posts</button></div>
+      </div>
+      <div class="qlist" id="q-list"></div>
+    </div>
+
+    <!-- road to 10k -->
+    <div class="road" id="road">
+      <div class="top">
+        <div class="t">🚀 Road to <span id="r-next">5k</span></div>
+        <div class="n"><span id="r-val">—</span> <small id="r-of">/ 5,000 followers</small></div>
+      </div>
+      <div class="track f" id="r-track"><i id="r-bar"></i></div>
+      <div class="sub" id="r-sub">—</div>
+      <div class="legend"><span><b style="background:#6fd83a"></b>replies / week</span><span><b style="background:#ff6fc4"></b>new followers / week</span></div>
+      <div class="wk" id="r-weeks"></div>
+    </div>
+
+    <!-- playbook -->
+    <details class="play" id="play">
+      <summary>📖 The 0 → 5k playbook</summary>
+      <ol>
+        <li><b>Be the reply guy.</b> Ask Grok for accounts in your niche, reply 150–400 times a day. ≈ 250 followers / week.</li>
+        <li><b>End every reply with a question</b> — people reply back, and the thread keeps you visible.</li>
+        <li><b>Follow the people you reply to.</b> Many follow back.</li>
+        <li><b>Team up with a bigger account.</b> Repost each other — views and followers compound over time.</li>
+        <li><b>Don't judge your posts yet.</b> Under 5k almost nothing goes viral; past 10k it happens all the time. Get to 10k fast.</li>
+      </ol>
+    </details>
 
     <div class="footer">
       <div class="synced">synced <span id="synced-t">—</span> · <span id="mute" style="cursor:pointer" title="sound on/off">🔊</span></div>
@@ -420,6 +507,7 @@ function render(s){
   if(cStretch) cs.textContent='🔥 stretch crushed! ('+stretch+'+)';
   else if(cDone) cs.textContent='✓ goal! · '+(stretch-t.comments)+' to stretch';
   else cs.textContent=(floor-t.comments)+' comments to go';
+  if(t.questions!=null && t.comments>0) cs.textContent+=` · ❓ ${Math.round(t.questions/t.comments*100)}% end with ?`;
 
   $('p-val').textContent=t.posts; $('p-of').textContent='/'+s.posts_goal;
   $('p-bar').style.width=Math.min(100,t.posts/s.posts_goal*100)+'%';
@@ -448,6 +536,9 @@ function render(s){
     heat.appendChild(el);
   });
 
+  renderRoad(s.growth);
+  if(QH!==s.handle) loadQueue(false); else renderQueue();
+
   const rf=s.last_refresh?new Date(s.last_refresh).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'never';
   $('synced-t').textContent=rf;
 
@@ -457,6 +548,93 @@ function render(s){
   if(t.met && prevMet===false) celebrate();
   prevMet=t.met;
 }
+
+const fmt=n=>n==null?'—':n.toLocaleString('en-US');
+const kfmt=n=>n>=1000?(n/1000)+'k':String(n);
+function renderRoad(g){
+  const road=$('road');
+  if(!g||g.followers==null){road.style.display='none';return;}
+  road.style.display='';
+  const f=g.followers, ms=g.milestones||[5000,10000];
+  const next=ms.find(m=>f<m), top=ms[ms.length-1];
+  $('r-next').textContent=next?kfmt(next):kfmt(top)+' ✓';
+  $('r-val').textContent=fmt(f);
+  $('r-of').textContent='/ '+fmt(next||top)+' followers';
+  // bar spans 0 → last milestone, with a tick at each earlier milestone
+  const tr=$('r-track'); tr.querySelectorAll('.ms').forEach(e=>e.remove());
+  ms.slice(0,-1).forEach(m=>{const e=document.createElement('span');e.className='ms';e.style.left=(m/top*100)+'%';e.dataset.tip=fmt(m);tr.appendChild(e);});
+  $('r-bar').style.width=Math.min(100,f/top*100)+'%';
+  const pace=g.pace_per_week, src=g.pace_measured?'your pace':'benchmark pace';
+  let sub;
+  if(!next) sub='🎉 Past 10k — virality is routine from here. Keep replying.';
+  else if(pace>0){
+    const wks=Math.ceil((next-f)/pace), eta=new Date(Date.now()+wks*7*864e5);
+    sub=`${fmt(next-f)} to go · ~${wks} week${wks>1?'s':''} at ${fmt(pace)}/wk (${src}) → ${eta.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
+    if(next===ms[0]) sub+=' · under 5k almost nothing goes viral — replies are the engine';
+  } else sub=`${fmt(next-f)} to go · pace is flat (${fmt(pace)}/wk) — push replies to 150+/day`;
+  $('r-sub').textContent=sub;
+  // weekly bars: replies vs follower gain, each scaled to its own max
+  const W=g.weeks||[], mc=Math.max(1,...W.map(w=>w.comments)), mg=Math.max(1,...W.map(w=>w.followers_gain||0));
+  $('r-weeks').innerHTML=W.map(w=>{
+    const d=new Date(w.start+'T00:00:00'), lb=d.toLocaleDateString('en-US',{month:'numeric',day:'numeric'});
+    const gh=w.followers_gain==null?0:Math.max(0,w.followers_gain)/mg*64;
+    const tipTxt=`week of ${lb} · 💬 ${fmt(w.comments)} replies · 👥 ${w.followers_gain==null?'no data yet':(w.followers_gain>=0?'+':'')+fmt(w.followers_gain)}`;
+    return `<div class="col2" data-tip="${tipTxt}"><div class="bars"><i class="c" style="height:${w.comments/mc*64}px"></i><i class="g" style="height:${gh}px;${w.followers_gain==null?'opacity:.25':''}"></i></div><div class="lb">${lb}</div></div>`;
+  }).join('');
+}
+
+// ── reply queue: open post → write the reply yourself on X (never automated) ──
+let QUEUE=null, QH=null;
+const qKey=()=>'ccx_q_'+CUR;
+function qMarks(){try{return JSON.parse(localStorage.getItem(qKey())||'{}');}catch(e){return {};}}
+function qMark(id,v){const m=qMarks(); m[id]=v;
+  const ids=Object.keys(m); if(ids.length>600) ids.slice(0,ids.length-600).forEach(k=>delete m[k]);
+  try{localStorage.setItem(qKey(),JSON.stringify(m));}catch(e){} renderQueue();}
+const SEGI={sf:'🌉',builder:'🛠',founder:'🚀',reach:'📣'};
+const ago=c=>{const h=(Date.now()-new Date(c))/36e5; return h<1?Math.max(1,Math.round(h*60))+'m':Math.round(h)+'h';};
+const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function loadQueue(force){
+  if(QH!==CUR){QUEUE=null;QH=CUR;}
+  const btn=$('q-ref'); btn.disabled=true; if(!QUEUE) $('q-meta').textContent='collecting fresh posts… (~20s)';
+  try{
+    const r=await fetch('/api/queue?handle='+encodeURIComponent(CUR)+(force?'&force=1':''));
+    const q=await r.json();
+    if(q.no_targets){$('queue').style.display='none';return;}
+    if(q.error){$('q-meta').textContent='error · '+q.error;return;}
+    QUEUE=q; $('queue').style.display=''; renderQueue();
+  }catch(e){$('q-meta').textContent='error · '+e.message;}
+  finally{btn.disabled=false;}
+}
+function renderQueue(){
+  if(!QUEUE) return;
+  const marks=qMarks(), replied=new Set([...(QUEUE.replied_ids||[]),...((STATE&&STATE.replied_ids)||[])]);
+  const hide=$('q-hide').checked;
+  let done=0; const rows=[];
+  QUEUE.items.forEach(it=>{
+    const st=replied.has(it.id)?'done':(marks[it.id]||'');
+    if(st==='done'||st==='skip') done++;
+    if(hide&&(st==='done'||st==='skip')) return;
+    const hot=it.replies<25&&it.likes>=20?' <span class="hot">🔥 early</span>':'';
+    rows.push(`<div class="qi ${st==='done'?'done':st==='open'?'opened':''}">
+      <div class="av" style="background-image:url('${proxy(it.avatar)}')"></div>
+      <div class="bd"><div class="who">${esc(it.name||it.handle)} <span>@${it.handle} · ${ago(it.created)}</span> ${(it.tags||[]).map(t=>SEGI[t]||'').join('')}</div>
+        <div class="tx">${esc(it.text)}</div>
+        <div class="ac"><a href="${it.url}" target="_blank" rel="noopener" data-q="${it.id}">Reply ↗</a>
+          <span>♥ ${fmt(it.likes)} · 💬 ${fmt(it.replies)}${hot}</span>
+          ${st==='done'?'<span>✓ replied</span>':`<span class="sk" data-skip="${it.id}">skip</span>`}</div></div></div>`);
+  });
+  const left=QUEUE.items.length-done;
+  $('q-meta').textContent=`${left} to reply · ${done} done/skipped · from ${QUEUE.targets} people · updated ${ago(new Date(QUEUE.ts*1000))} ago`
+    +(QUEUE.note==='budget'?' (daily API limit)':'');
+  $('q-list').innerHTML=rows.join('')||'<div class="meta">All done 🎉 — hit “Fresh posts” later.</div>';
+}
+$('q-list').addEventListener('click',e=>{
+  const a=e.target.closest('[data-q]'); if(a){qMark(a.dataset.q,'open'); return;}
+  const s=e.target.closest('[data-skip]'); if(s) qMark(s.dataset.skip,'skip');
+});
+$('q-hide').onchange=renderQueue;
+$('q-ref').onclick=()=>loadQueue(true);
+setInterval(()=>{ if(QUEUE&&!document.hidden) loadQueue(false); },10*60*1000); // server reuses cache <20 min
 
 // little bounce on number tap (no fake increment — real data)
 $('c-num').onclick=()=>{$('c-num').classList.add('pop');setTimeout(()=>$('c-num').classList.remove('pop'),520);};

@@ -1,7 +1,7 @@
 {
   "handle": "burninganna",
-  "comments_goal": 10,
-  "comments_stretch": 20,
+  "comments_goal": 150,
+  "comments_stretch": 300,
   "posts_goal": 1,
   "lookback_days": 4,
   "graph_days": 90,
@@ -11,6 +11,23 @@
   "author": "burninganna",
   "site_url": "",
   "share_cta": "Can you beat my streak?",
+  "follower_milestones": [
+    5000,
+    10000
+  ],
+  "benchmark_followers_per_week": 250,
+  "queue_hours": 16,
+  "queue_ttl_minutes": 20,
+  "queue_min_refresh_minutes": 3,
+  "queue_chunk": 16,
+  "queue_pages": 2,
+  "queue_per_author": 4,
+  "queue_mix": {
+    "sf": 0.35,
+    "builder": 0.3,
+    "founder": 0.25,
+    "reach": 0.1
+  },
   "cache_ttl_minutes": 360,
   "new_handle_backfill_days": 14,
   "daily_call_cap": 1500,

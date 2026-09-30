@@ -2,6 +2,34 @@
 
 **Created:** 2026-06-22
 
+## 🎯 Reply queue (2026-09-30) — ready locally, NOT deployed yet
+So Anna doesn't scroll the feed to hit 150 replies/day. Replies are ALWAYS written by hand on X (X bans automated replies) —
+the app only picks which posts to open.
+- **Who (updated same day → ICP list):** `targets.json` = `{"burninganna": {handles, segments, built}}`, 210 people,
+  built by `~/Developer/X growth/icp_build.py` (see its STATUS). Queue interleaves by segment per `queue_mix`
+  (sf .35 / builder .30 / founder .25 / reach .10), chips 🌉🛠🚀📣 on each post. Refresh ≈ 44s, ~28 calls.
+- ~~Old list~~: `targets.json` → `{"burninganna": [129 handles]}` = digest.py 9 + anchor_rank (score>0, ≥0.3 posts/day) + ladder 110,
+  people only (dropped theworldlabs, bfl_ai, FlowbyGoogle, sesame, DecartAI). Edit that file to change the list.
+  Queue shows only for handles present in targets.json (others: hidden).
+- **What:** `/api/queue` → OR-searches (16 handles/query, 2 pages) for original posts < 16h, ranked by
+  velocity × visibility (few replies = your reply is seen) × freshness bonus < 2h; max 4 posts per person; ≤250.
+  Cached in KV `cc:queue:<handle>` 20 min; forced refresh floor 3 min. Cost ≈ 18 API calls / ~20s per refresh.
+- **Done-detection:** her replies' `inReplyToId` are stored in `data.replied` (last 2 days) on every lookup/live poll →
+  replied posts auto-grey/hide. "Reply ↗" click = "opened" (dimmed), "skip" — both in localStorage.
+- Verified locally: 103–161 posts from 129 people.
+
+## 🚀 Reply-guy playbook (2026-09-30) — ready locally, NOT deployed yet
+Based on the "0 → 5k followers" post (150–400 replies/day ≈ 250 followers/week; <5k nothing goes viral, >10k it's routine).
+- **Goal raised: 150 comments floor / 300 stretch** (+1 post). ⚠️ The streak is recomputed with the new goal → old days no longer count.
+- **Road to 5k / 10k card**: followers → next milestone, ETA at the measured weekly pace (last ≤28 days, needs ≥3 days of log),
+  falls back to the 250/wk benchmark. Config: `follower_milestones`, `benchmark_followers_per_week`.
+- **Weekly chart**: replies/week (green) vs new followers/week (pink), last 8 weeks.
+  Follower history starts now: `data.followers_log` = one count per day, written on every profile fetch
+  (live poll fetches the profile once a day just for this → +1 API call/day per open handle). No backfill possible.
+- **"❓ N% end with ?"** in the comments pill — replies whose text ends with "?" (new field `q` per day; old days have none).
+- **Playbook** collapsible block with the 5 tactics.
+- Verified locally (burninganna: 1,756 followers → 5k ETA ~13 wks at benchmark). Commit + `npx vercel deploy --prod --yes` pending.
+
 ## 🔔 Live sounds (2026-09-27) — LIVE
 - While the page is open (even in a background tab) it polls `/api/lookup?live=1` every **2 min**.
   Live mode = today only, no profile fetch → ~4 twitterapi.io calls per poll. Sleeps after **3h** without interaction on the page.

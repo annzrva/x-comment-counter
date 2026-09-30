@@ -2,7 +2,7 @@
 
 **Created:** 2026-06-22
 
-## 🎯 Reply queue (2026-09-30) — ready locally, NOT deployed yet
+## 🎯 Reply queue (2026-09-30) — ✅ LIVE (deployed ca5798d)
 So Anna doesn't scroll the feed to hit 150 replies/day. Replies are ALWAYS written by hand on X (X bans automated replies) —
 the app only picks which posts to open.
 - **Who (updated same day → ICP list):** `targets.json` = `{"burninganna": {handles, segments, built}}`, 210 people,
@@ -18,7 +18,7 @@ the app only picks which posts to open.
   replied posts auto-grey/hide. "Reply ↗" click = "opened" (dimmed), "skip" — both in localStorage.
 - Verified locally: 103–161 posts from 129 people.
 
-## 🚀 Reply-guy playbook (2026-09-30) — ready locally, NOT deployed yet
+## 🚀 Reply-guy playbook (2026-09-30) — ✅ LIVE
 Based on the "0 → 5k followers" post (150–400 replies/day ≈ 250 followers/week; <5k nothing goes viral, >10k it's routine).
 - **Goal raised: 150 comments floor / 300 stretch** (+1 post). ⚠️ The streak is recomputed with the new goal → old days no longer count.
 - **Road to 5k / 10k card**: followers → next milestone, ETA at the measured weekly pace (last ≤28 days, needs ≥3 days of log),

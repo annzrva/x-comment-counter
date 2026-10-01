@@ -2,14 +2,15 @@
 
 **Created:** 2026-06-22
 
-## 💡 Reply ideas (2026-09-30) — code ready, BLOCKED on AI Gateway billing, not deployed
-- "💡 ideas" on each queue post → `/api/suggest?handle&id` → 3 drafts (insight / take / curious), each ending with a question.
-  Tap = copy; Anna rewrites in her own words on X. Only posts already in her queue (no arbitrary text), cached 2 days per post,
-  app-wide cap `suggest_daily_cap` 300/day, per-IP rate limit.
-- Model `anthropic/claude-sonnet-5.5` via Vercel AI Gateway (chat completions), auth = OIDC (`x-vercel-oidc-token` header /
-  `VERCEL_OIDC_TOKEN`) or `AI_GATEWAY_API_KEY`. Voice = ~15 of her recent replies (cached a day). ≈ $0.006 per 3 ideas.
-- ❌ Gateway answered 403 `customer_verification_required`: team **annas-projects** needs a credit card on file
-  (unlocks the free monthly credits). Once added: test locally, then deploy.
+## 💡 Reply ideas (2026-09-30) — ✅ LIVE (pre-written batches)
+- Each queue post gets 3 drafts (insight / take / curious), each ending with a question; "💡 ideas" expands them, tap = copy,
+  Anna rewrites on X herself.
+- Written by **`ideas_batch.py`** on Anna's Mac: local `claude -p` (her subscription, **no tools** — post text is untrusted),
+  Sonnet, 15 posts per call ×3 parallel, voice = her ~15 recent replies. Result → `ideas.json` (pruned to 2 days) → prod deploy.
+  `get_queue` attaches `item.ideas`. First run 2026-09-30: 135/250 posts. ~2 min per 120 posts.
+- Schedule: `ai.varg.xideas.plist` (10:30–22:30 every 2h). Install: `cp ai.varg.xideas.plist ~/Library/LaunchAgents/ &&
+  launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/ai.varg.xideas.plist`. Logs: `logs/ideas.log`.
+- AI Gateway on-click path (`/api/suggest`) is still in the code but unused — needs a card on team annas-projects.
 
 ## 🎯 Reply queue (2026-09-30) — ✅ LIVE (deployed ca5798d)
 So Anna doesn't scroll the feed to hit 150 replies/day. Replies are ALWAYS written by hand on X (X bans automated replies) —

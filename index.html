@@ -191,6 +191,14 @@
     border-radius:999px;padding:4px 12px;box-shadow:0 3px 8px rgba(40,120,210,.3)}
   .qi .ac .sk{cursor:pointer;color:#9aa6cf}
   .qi .hot{color:#e0457b}
+  .qi .ac .id{cursor:pointer;color:#a0306f}
+  .ideas{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+  .idea{background:linear-gradient(180deg,#fff,#fff0fa);border:1.5px solid #ffd1ef;border-radius:12px;padding:7px 10px;
+    font-size:13px;font-weight:500;color:#33457a;line-height:1.35;cursor:pointer;position:relative}
+  .idea:hover{border-color:#ff9ce0}
+  .idea b{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#c05a94;margin-right:6px}
+  .idea.copied::after{content:'copied ✓';position:absolute;right:8px;top:6px;font-size:11px;font-weight:700;color:#1f7a3a}
+  .ideas .more{font-size:11px;font-weight:600;color:#9aa6cf;cursor:pointer;align-self:flex-start}
 
   .footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
   .footer .synced{font-size:13px;font-weight:500;color:#33457a}
@@ -619,8 +627,10 @@ function renderQueue(){
       <div class="av" style="background-image:url('${proxy(it.avatar)}')"></div>
       <div class="bd"><div class="who">${esc(it.name||it.handle)} <span>@${it.handle} · ${ago(it.created)}</span> ${(it.tags||[]).map(t=>SEGI[t]||'').join('')}</div>
         <div class="tx">${esc(it.text)}</div>
+        ${it.ideas&&OPEN_IDEAS.has(it.id)?ideasHtml(it):''}
         <div class="ac"><a href="${it.url}" target="_blank" rel="noopener" data-q="${it.id}">Reply ↗</a>
           <span>♥ ${fmt(it.likes)} · 💬 ${fmt(it.replies)}${hot}</span>
+          ${it.ideas?`<span class="id" data-ideas="${it.id}">💡 ${OPEN_IDEAS.has(it.id)?'hide':'ideas'}</span>`:''}
           ${st==='done'?'<span>✓ replied</span>':`<span class="sk" data-skip="${it.id}">skip</span>`}</div></div></div>`);
   });
   const left=QUEUE.items.length-done;
@@ -628,7 +638,17 @@ function renderQueue(){
     +(QUEUE.note==='budget'?' (daily API limit)':'');
   $('q-list').innerHTML=rows.join('')||'<div class="meta">All done 🎉 — hit “Fresh posts” later.</div>';
 }
+// reply ideas: drafts with a question at the end — tap one to copy, then rewrite it in your words on X
+const OPEN_IDEAS=new Set();
+function ideasHtml(it){
+  return `<div class="ideas">${it.ideas.map((r,i)=>`<div class="idea" data-copy="${it.id}:${i}"><b>${esc(r.angle)}</b>${esc(r.text)}</div>`).join('')}
+    <div class="meta">tap to copy · rewrite it your way</div></div>`;
+}
 $('q-list').addEventListener('click',e=>{
+  const i=e.target.closest('[data-ideas]'); if(i){const id=i.dataset.ideas; OPEN_IDEAS.has(id)?OPEN_IDEAS.delete(id):OPEN_IDEAS.add(id); renderQueue(); return;}
+  const c=e.target.closest('[data-copy]'); if(c){const [id,k]=c.dataset.copy.split(':');
+    const it=QUEUE.items.find(x=>x.id===id); if(it) navigator.clipboard.writeText(it.ideas[+k].text).catch(()=>{});
+    c.classList.add('copied'); setTimeout(()=>c.classList.remove('copied'),1500); return;}
   const a=e.target.closest('[data-q]'); if(a){qMark(a.dataset.q,'open'); return;}
   const s=e.target.closest('[data-skip]'); if(s) qMark(s.dataset.skip,'skip');
 });

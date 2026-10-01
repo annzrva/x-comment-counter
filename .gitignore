@@ -17,3 +17,4 @@ _cardtest.*
 
 # private launch notes — not for the public repo
 LAUNCH.md
+logs/

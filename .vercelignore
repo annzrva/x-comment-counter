@@ -12,3 +12,5 @@ start.command
 # local-dev entrypoint only — Vercel functions import api/_core directly
 app.py
 config.json
+logs/
+ideas_batch.py

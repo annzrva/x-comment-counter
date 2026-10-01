@@ -2,6 +2,15 @@
 
 **Created:** 2026-06-22
 
+## 💡 Reply ideas (2026-09-30) — code ready, BLOCKED on AI Gateway billing, not deployed
+- "💡 ideas" on each queue post → `/api/suggest?handle&id` → 3 drafts (insight / take / curious), each ending with a question.
+  Tap = copy; Anna rewrites in her own words on X. Only posts already in her queue (no arbitrary text), cached 2 days per post,
+  app-wide cap `suggest_daily_cap` 300/day, per-IP rate limit.
+- Model `anthropic/claude-sonnet-5.5` via Vercel AI Gateway (chat completions), auth = OIDC (`x-vercel-oidc-token` header /
+  `VERCEL_OIDC_TOKEN`) or `AI_GATEWAY_API_KEY`. Voice = ~15 of her recent replies (cached a day). ≈ $0.006 per 3 ideas.
+- ❌ Gateway answered 403 `customer_verification_required`: team **annas-projects** needs a credit card on file
+  (unlocks the free monthly credits). Once added: test locally, then deploy.
+
 ## 🎯 Reply queue (2026-09-30) — ✅ LIVE (deployed ca5798d)
 So Anna doesn't scroll the feed to hit 150 replies/day. Replies are ALWAYS written by hand on X (X bans automated replies) —
 the app only picks which posts to open.

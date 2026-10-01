@@ -61,6 +61,7 @@ DEFAULT_CONFIG = {
     # ── road to 10k (the reply-guy playbook: <5k nothing goes viral, >10k it happens all the time) ──
     "follower_milestones": [5000, 10000],
     "benchmark_followers_per_week": 250,  # what 150–400 replies/day typically buys
+    "followers_check_minutes": 30,   # follower count + new-follower diff cadence (owner lists only)
     # ── reply queue: fresh posts from api/targets.json people, so you don't scroll the feed ──
     "queue_hours": 16,               # only posts younger than this
     "queue_ttl_minutes": 20,         # cached queue is reused this long
@@ -326,7 +327,7 @@ def day_key(dt, tz):
 
 # ── core: fetch & count ───────────────────────────────────────────────────
 
-def fetch_counts(handle, since_dt, tz, max_pages, want_posts=True, replied=None):
+def fetch_counts(handle, since_dt, tz, max_pages, want_posts=True, replied=None, replied_users=None):
     """Return {date_str: {comments, posts}} for [since_dt, now].
 
     replied: optional dict filled with {tweet_id_replied_to: date} (for the reply queue).
@@ -357,6 +358,9 @@ def fetch_counts(handle, since_dt, tz, max_pages, want_posts=True, replied=None)
                     counts[k]["q"] += 1
                 if field == "comments" and replied is not None and t.get("inReplyToId"):
                     replied[str(t["inReplyToId"])] = k
+                if field == "comments" and replied_users is not None and t.get("inReplyToUsername"):
+                    u = t["inReplyToUsername"].lower()
+                    replied_users[u] = max(replied_users.get(u, ""), k)
             if stop or not data.get("has_next_page"):
                 break
             cursor = data.get("next_cursor", "")
@@ -405,6 +409,54 @@ def _replied(data, tz):
     return r
 
 
+def _replied_users(data, tz):
+    """Who this handle replied to in the last 30 days → attribute new followers to replies."""
+    cutoff = (datetime.now(tz) - timedelta(days=30)).strftime("%Y-%m-%d")
+    r = {k: v for k, v in data.get("replied_users", {}).items() if v >= cutoff}
+    data["replied_users"] = r
+    return r
+
+
+def track_new_followers(cfg, handle, data, tz):
+    """Owner-only: diff the newest 200 followers against what we've seen → who just followed.
+
+    Throttled to once per `followers_check_minutes`. First run only seeds (no flood of "new").
+    """
+    if not load_targets(handle)[0]:
+        return
+    now = time.time()
+    if now - data.get("followers_checked", 0) < cfg.get("followers_check_minutes", 30) * 60:
+        return
+    page = call("/twitter/user/followers", {"userName": handle, "pageSize": 200}).get("followers") or []
+    data["followers_checked"] = now
+    ids = [str(f.get("id")) for f in page if f.get("id")]
+    seen = data.get("followers_seen")
+    if seen is None:
+        data["followers_seen"] = ids
+        return
+    seen_set = set(seen)
+    today = datetime.now(tz).strftime("%Y-%m-%d")
+    replied = data.get("replied_users", {})
+    targets = {h.lower() for h in load_targets(handle)[0]}
+    fresh = []
+    for f in page:
+        fid = str(f.get("id"))
+        if not fid or fid in seen_set:
+            continue
+        u = (f.get("userName") or f.get("screen_name") or "")
+        fresh.append({
+            "id": fid, "date": today, "handle": u, "name": f.get("name") or "",
+            "avatar": f.get("profile_image_url_https") or "",
+            "followers": int(f.get("followers_count") or 0),
+            "bio": (f.get("description") or "")[:140],
+            "replied": u.lower() in replied, "in_list": u.lower() in targets,
+        })
+    if fresh:
+        cutoff = (datetime.now(tz) - timedelta(days=30)).strftime("%Y-%m-%d")
+        data["new_followers"] = (fresh + [x for x in data.get("new_followers", []) if x["date"] >= cutoff])[:400]
+    data["followers_seen"] = (ids + [i for i in seen if i not in set(ids)])[:5000]
+
+
 def log_followers(data, prof, tz):
     """Keep one follower count per day (latest wins) for the weekly growth chart."""
     n = (prof or {}).get("followers")
@@ -447,17 +499,25 @@ def refresh(cfg, handle, data, live=False):
     handle = sanitize_handle(handle)
     tz = local_tz(cfg)
     since = _midnight_since(tz, 0 if live else cfg["lookback_days"])
-    fresh = fetch_counts(handle, since, tz, 5 if live else 40, replied=_replied(data, tz))
+    fresh = fetch_counts(handle, since, tz, 5 if live else 40, replied=_replied(data, tz),
+                         replied_users=_replied_users(data, tz))
     data.setdefault("days", {})
     for k, v in fresh.items():
         data["days"][k] = v
     today = datetime.now(tz).strftime("%Y-%m-%d")
     data["days"].setdefault(today, {"comments": 0, "posts": 0})
-    need_followers = today not in data.get("followers_log", {})
+    # live poll: refresh the follower count at most every 30 min (1 call), not every 2 min
+    need_followers = (today not in data.get("followers_log", {})
+                      or time.time() - data.get("profile_ts", 0) > cfg.get("followers_check_minutes", 30) * 60)
     prof = None if (live and not need_followers) else fetch_profile(handle)
     if prof:
         data["profile"] = prof
+        data["profile_ts"] = time.time()
         log_followers(data, prof, tz)
+    try:
+        track_new_followers(cfg, handle, data, tz)
+    except BudgetExceeded:
+        pass
     data["last_refresh"] = datetime.now(tz).isoformat(timespec="seconds")
     save_data(handle, data)
     return data
@@ -556,7 +616,30 @@ def build_growth(cfg, data, tz, weeks=8):
         base = before[-1] if before else (in_wk[0] if in_wk else None)
         gain = (in_wk[-1] - base) if (in_wk and base is not None) else None
         wk.append({"start": start.isoformat(), "comments": comments, "followers_gain": gain})
+    def at_or_before(day):
+        ks = [d for d in log if d <= day]
+        return log[max(ks)] if ks else None
+    tstr = today.isoformat()
+    yday = at_or_before((today - timedelta(days=1)).isoformat())
+    wk_ago = at_or_before((today - timedelta(days=7)).isoformat())
+    first = log[min(log)] if log else None
+    daily = []
+    for i in range(13, -1, -1):
+        d = (today - timedelta(days=i)).isoformat()
+        prev = at_or_before((today - timedelta(days=i + 1)).isoformat())
+        daily.append({"date": d, "gain": (log[d] - prev) if (d in log and prev is not None) else None})
+    nf = data.get("new_followers", [])
+    wk_cut = (today - timedelta(days=6)).isoformat()
+    nf_week = [x for x in nf if x["date"] >= wk_cut]
     return {
+        "today_gain": (cur - yday) if (isinstance(cur, int) and yday is not None) else None,
+        "week_gain": (cur - (wk_ago if wk_ago is not None else first)) if (isinstance(cur, int) and first is not None) else None,
+        "week_partial": wk_ago is None,
+        "daily": daily,
+        "new_followers": nf[:60],
+        "new_week": len(nf_week),
+        "new_week_replied": sum(1 for x in nf_week if x.get("replied")),
+        "tracking_new": "followers_seen" in data,
         "followers": cur,
         "milestones": cfg.get("follower_milestones", [5000, 10000]),
         "pace_per_week": pace,

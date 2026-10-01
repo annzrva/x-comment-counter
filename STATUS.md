@@ -2,6 +2,14 @@
 
 **Created:** 2026-06-22
 
+## 📈 Follower gain tracking (2026-10-01) — ✅ LIVE
+- Road card: **+today / +last 7 days** (from `followers_log`; "since tracking began" until 7 days exist), daily bars (14 days),
+  **👋 New followers** list with badges 💬 "you replied" (to any of their posts in the last 30 days) and 🎯 "in your list",
+  plus "X/Y new followers you'd replied to" = are replies converting.
+- Owner-only (handles in targets.json): every ≤30 min (`followers_check_minutes`) on any refresh incl. the 2-min live poll:
+  profile (count) + newest 200 followers diffed vs `followers_seen` (first run only seeds). `replied_users` from her replies.
+  +~2 API calls / 30 min while the page is open. Unfollows aren't listed (only the net count shows them).
+
 ## 💡 Reply ideas (2026-09-30) — ✅ LIVE (pre-written batches)
 - Each queue post gets 3 drafts (insight / take / curious), each ending with a question; "💡 ideas" expands them, tap = copy,
   Anna rewrites on X herself.

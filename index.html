@@ -158,6 +158,24 @@
   .wk .bars i.c{background:linear-gradient(180deg,#c4ff8a,#6fd83a)}
   .wk .bars i.g{background:linear-gradient(180deg,#ffc2ea,#ff6fc4)}
   .wk .lb{font-size:10px;font-weight:600;color:#8a6a86}
+  .gain{display:flex;gap:10px;flex-wrap:wrap}
+  .gain .g{background:rgba(255,255,255,.75);border:1.5px solid #fff;border-radius:14px;padding:7px 12px;
+    font-size:12px;font-weight:600;color:#7a4a6a;box-shadow:0 3px 8px rgba(180,60,130,.12)}
+  .gain .g b{display:block;font-size:22px;font-weight:700;color:#b23a82;line-height:1.1}
+  .gain .g b.neg{color:#8a97bb}
+  .dly{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;align-items:end;height:44px}
+  .dly i{display:block;border-radius:4px 4px 2px 2px;background:linear-gradient(180deg,#ffc2ea,#ff6fc4);min-height:2px}
+  .dly i.na{background:rgba(255,255,255,.6)}
+  .nf summary{cursor:pointer;font-size:13px;font-weight:700;color:#a0306f;list-style:none}
+  .nf summary::-webkit-details-marker{display:none}
+  .nfl{display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:320px;overflow-y:auto}
+  .nfi{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.7);border:1.5px solid #fff;border-radius:12px;padding:6px 10px;
+    font-size:12px;font-weight:500;color:#33457a;text-decoration:none}
+  .nfi .av{width:28px;height:28px;border-radius:50%;flex:none;background:#ffe0f3 center/cover;border:2px solid #fff}
+  .nfi .nm{font-weight:700;color:#1d2b4a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nfi .bd{flex:1;min-width:0}
+  .nfi .bio{color:#7e8bbf;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nfi .bg{flex:none;font-size:11px;font-weight:700;color:#1f7a3a}
   .legend{display:flex;gap:14px;font-size:11px;font-weight:600;color:#7a4a6a}
   .legend b{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:4px;vertical-align:-1px}
   .play{background:rgba(255,255,255,.5);border:2px solid rgba(255,255,255,.9);border-radius:22px;
@@ -347,6 +365,10 @@
       </div>
       <div class="track f" id="r-track"><i id="r-bar"></i></div>
       <div class="sub" id="r-sub">—</div>
+      <div class="gain" id="r-gain"></div>
+      <div class="legend"><span><b style="background:#ff6fc4"></b>new followers / day · last 14 days</span></div>
+      <div class="dly" id="r-daily"></div>
+      <details class="nf" id="r-nf"><summary id="r-nf-h">👋 New followers</summary><div class="nfl" id="r-nf-l"></div></details>
       <div class="legend"><span><b style="background:#6fd83a"></b>replies / week</span><span><b style="background:#ff6fc4"></b>new followers / week</span></div>
       <div class="wk" id="r-weeks"></div>
     </div>
@@ -581,6 +603,25 @@ function renderRoad(g){
     if(next===ms[0]) sub+=' · under 5k almost nothing goes viral — replies are the engine';
   } else sub=`${fmt(next-f)} to go · pace is flat (${fmt(pace)}/wk) — push replies to 150+/day`;
   $('r-sub').textContent=sub;
+  // gains: today / this week / new followers that came from your replies
+  const sg=n=>n==null?'—':(n>0?'+':'')+fmt(n);
+  const gb=[
+    `<div class="g"><b class="${(g.today_gain||0)<0?'neg':''}">${sg(g.today_gain)}</b>today</div>`,
+    `<div class="g"><b class="${(g.week_gain||0)<0?'neg':''}">${sg(g.week_gain)}</b>${g.week_partial?'since tracking began':'last 7 days'}</div>`];
+  if(g.tracking_new) gb.push(`<div class="g"><b>${g.new_week_replied}/${g.new_week}</b>new followers you'd replied to</div>`);
+  $('r-gain').innerHTML=gb.join('');
+  const D=g.daily||[], md=Math.max(1,...D.map(d=>Math.abs(d.gain||0)));
+  $('r-daily').innerHTML=D.map(d=>{const lb=new Date(d.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    return `<i class="${d.gain==null?'na':''}" style="height:${d.gain==null?3:Math.max(3,Math.max(0,d.gain)/md*44)}px" data-tip="${lb} · ${d.gain==null?'no data yet':sg(d.gain)+' followers'}"></i>`;}).join('');
+  const NF=g.new_followers||[];
+  $('r-nf').style.display=g.tracking_new?'':'none';
+  $('r-nf-h').textContent=NF.length?`👋 New followers (${g.new_week} this week)`:'👋 New followers — will show up as people follow you';
+  $('r-nf-l').innerHTML=NF.map(f=>`<a class="nfi" href="https://x.com/${f.handle}" target="_blank" rel="noopener">
+    <span class="av" style="background-image:url('${proxy(f.avatar)}')"></span>
+    <span class="bd"><div class="nm">${esc(f.name||f.handle)} <span style="font-weight:500;color:#7e8bbf">@${f.handle} · ${fmt(f.followers)} · ${new Date(f.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span></div>
+    <div class="bio">${esc(f.bio||'')}</div></span>
+    ${f.replied?'<span class="bg">💬 you replied</span>':''}${f.in_list?'<span class="bg">🎯</span>':''}</a>`).join('');
+
   // weekly bars: replies vs follower gain, each scaled to its own max
   const W=g.weeks||[], mc=Math.max(1,...W.map(w=>w.comments)), mg=Math.max(1,...W.map(w=>w.followers_gain||0));
   $('r-weeks').innerHTML=W.map(w=>{

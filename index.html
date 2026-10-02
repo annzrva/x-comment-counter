@@ -307,6 +307,9 @@
       <button class="b b-blue" id="go" type="submit">Check</button>
     </form>
 
+    <div id="api-warn" style="display:none;background:linear-gradient(180deg,#fff3c4,#ffd86b);border:2px solid #fff;border-radius:18px;
+      padding:10px 16px;font-size:13px;font-weight:700;color:#7a5200;box-shadow:0 6px 16px rgba(240,180,40,.35)"></div>
+
     <!-- HERO: comments -->
     <div class="card hero">
       <div class="gloss"></div><div class="swp"></div>
@@ -511,6 +514,7 @@ async function loadHandle(handle, force, btn){
     if(s.error){
       setSearchState('err');
       $('synced-t').textContent=(s.invalid_handle?'':'error · ')+s.error;
+      if(!s.invalid_handle) apiWarn(s.error);
       return;
     }
     setSearchState();
@@ -634,6 +638,15 @@ function renderRoad(g){
 
 // ── reply queue: open post → write the reply yourself on X (never automated) ──
 let QUEUE=null, QH=null;
+// surface API failures instead of silently showing frozen numbers
+function apiWarn(err){
+  const w=$('api-warn');
+  if(!err){w.style.display='none';return;}
+  w.innerHTML=/credit|402|recharge/i.test(err)
+    ? '⚠️ twitterapi.io balance is empty — numbers are frozen. <a href="https://twitterapi.io/dashboard" target="_blank" rel="noopener" style="color:#7a1c5a">Top up →</a>'
+    : '⚠️ Can\'t refresh right now: '+esc(String(err).slice(0,160));
+  w.style.display='';
+}
 const qKey=()=>'ccx_q_'+CUR;
 function qMarks(){try{return JSON.parse(localStorage.getItem(qKey())||'{}');}catch(e){return {};}}
 function qMark(id,v){const m=qMarks(); m[id]=v;
@@ -649,7 +662,7 @@ async function loadQueue(force){
     const r=await fetch('/api/queue?handle='+encodeURIComponent(CUR)+(force?'&force=1':''));
     const q=await r.json();
     if(q.no_targets){$('queue').style.display='none';return;}
-    if(q.error){$('q-meta').textContent='error · '+q.error;return;}
+    if(q.error){$('q-meta').textContent='error · '+q.error;apiWarn(q.error);return;}
     QUEUE=q; $('queue').style.display=''; renderQueue();
   }catch(e){$('q-meta').textContent='error · '+e.message;}
   finally{btn.disabled=false;}
@@ -971,7 +984,7 @@ let lastActive=Date.now(), polling=false;
 setInterval(async()=>{
   if(polling||!CUR||!STATE||Date.now()-lastActive>IDLE_MS) return;
   polling=true;
-  try{const s=await fetchState({live:true}); if(s&&!s.error&&s.handle===CUR) applyState(s);}
+  try{const s=await fetchState({live:true}); if(s&&!s.error&&s.handle===CUR){applyState(s);apiWarn(null);} else if(s&&s.error) apiWarn(s.error);}
   catch(e){} finally{polling=false;}
 },LIVE_MS);
 </script>

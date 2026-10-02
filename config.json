@@ -16,10 +16,10 @@
     10000
   ],
   "benchmark_followers_per_week": 250,
-  "followers_check_minutes": 30,
+  "followers_check_minutes": 60,
   "queue_hours": 16,
-  "queue_ttl_minutes": 20,
-  "queue_min_refresh_minutes": 3,
+  "queue_ttl_minutes": 45,
+  "queue_min_refresh_minutes": 10,
   "queue_chunk": 16,
   "queue_pages": 2,
   "queue_per_author": 4,

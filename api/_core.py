@@ -61,11 +61,11 @@ DEFAULT_CONFIG = {
     # ── road to 10k (the reply-guy playbook: <5k nothing goes viral, >10k it happens all the time) ──
     "follower_milestones": [5000, 10000],
     "benchmark_followers_per_week": 250,  # what 150–400 replies/day typically buys
-    "followers_check_minutes": 30,   # follower count + new-follower diff cadence (owner lists only)
+    "followers_check_minutes": 60,   # follower count + new-follower diff cadence (owner lists only)
     # ── reply queue: fresh posts from api/targets.json people, so you don't scroll the feed ──
     "queue_hours": 16,               # only posts younger than this
-    "queue_ttl_minutes": 20,         # cached queue is reused this long
-    "queue_min_refresh_minutes": 3,  # floor for forced refreshes
+    "queue_ttl_minutes": 45,         # cached queue is reused this long
+    "queue_min_refresh_minutes": 10,  # floor for forced refreshes
     "queue_chunk": 16,               # handles per OR-search
     "queue_pages": 2,                # pages per chunk (20 tweets/page)
     "queue_per_author": 4,           # max posts per person in the queue

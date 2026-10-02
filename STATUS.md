@@ -2,6 +2,13 @@
 
 **Created:** 2026-06-22
 
+## ⚠️ 2026-10-01 — twitterapi.io credits ran out (402 "Credits is not enough")
+Prod froze at 13 comments (last refresh 14:00 PT) — the page silently showed stale numbers. Burned by: 2 ICP builds
+(~1.5k calls), the reply queue (~28 calls per refresh), follower checks, live polls.
+- Fix: yellow banner on the page when the API fails (credits → "Top up" link). Cost cuts: queue cache 20→45 min,
+  forced-refresh floor 3→10 min, follower checks 30→60 min.
+- **Anna must top up at https://twitterapi.io/dashboard** — nothing refreshes until then.
+
 ## 📈 Follower gain tracking (2026-10-01) — ✅ LIVE
 - Road card: **+today / +last 7 days** (from `followers_log`; "since tracking began" until 7 days exist), daily bars (14 days),
   **👋 New followers** list with badges 💬 "you replied" (to any of their posts in the last 30 days) and 🎯 "in your list",

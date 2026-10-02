@@ -16,12 +16,15 @@
     10000
   ],
   "benchmark_followers_per_week": 250,
+  "followers_check_minutes": 30,
   "queue_hours": 16,
   "queue_ttl_minutes": 20,
   "queue_min_refresh_minutes": 3,
   "queue_chunk": 16,
   "queue_pages": 2,
   "queue_per_author": 4,
+  "suggest_model": "anthropic/claude-sonnet-5.5",
+  "suggest_daily_cap": 300,
   "queue_mix": {
     "sf": 0.35,
     "builder": 0.3,

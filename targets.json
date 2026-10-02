@@ -1,1004 +1,853 @@
 {
  "burninganna": {
   "handles": [
-   "mrinalikamath",
-   "quasa0",
-   "annieqyang",
-   "utpalnadiger",
-   "antopatrex1",
-   "adiabaticgarden",
-   "Paulina_laba",
-   "aalaprag",
-   "sigmagirlgrind",
-   "Peter_Soida",
-   "lifegetsdicey",
-   "SaaiArora",
-   "elijahuwas",
-   "rakibulism",
-   "MrBrjan",
-   "vince_builds",
-   "tife_olayinka",
-   "Pequelord",
-   "rethink_hub",
-   "Nefer_L",
-   "akilastudiocom",
-   "Behfar_I",
-   "manavsehgal",
-   "TracyMassaro_",
-   "Velascode_",
-   "VPanev27435",
-   "aurelienbbn",
-   "hameedraha",
-   "zawadzki_diana",
-   "dantegaleazzi",
-   "christophersaum",
-   "mindinpanic",
-   "samseely",
-   "spatocodex",
-   "Areai51",
-   "sdrth",
-   "gianthologist",
-   "richchetwynd",
-   "faizan10114",
-   "gracegong",
-   "rad_hardened",
-   "DanielPrevoznik",
-   "dmarcosm98",
-   "MDALISHANALI2",
-   "WUdoudo50287",
-   "acecreamu",
-   "teesmmm",
-   "hakimuddinkika",
-   "AdmireTheWeb",
-   "jamie_maguire1",
-   "verbove",
-   "13doots",
-   "luna9xoff",
-   "jilyannori",
-   "GauravGoyalAI",
-   "AryShriv",
-   "nwitten",
-   "Sikandar_lx",
-   "PopCata350599",
-   "mubeenchatthaa",
-   "chanankrivisky",
-   "builtnewai",
-   "YashasGunderia",
-   "kemiisf",
-   "edibudimilic",
-   "lucky_uros",
-   "avi11x",
-   "hellosimar",
-   "whysumancode",
-   "branding_presh",
-   "momelavelle",
    "1clawAI",
-   "soham_nayak04",
-   "TheMingjie",
-   "TheRobKennedy",
-   "gaurabhmathure",
-   "seeksteve",
-   "kalin_t",
-   "nicoloboschi",
-   "tomi_roggio",
-   "md_ali21993",
-   "hamidreddit",
-   "IsuhoFriday",
-   "__melchen__",
-   "KhraminaDianka",
-   "nav_gpt",
-   "edtadros",
-   "DrewWakefield5",
-   "nomaanahmed",
-   "____baran",
-   "milesgr_",
-   "JamesLex",
-   "attenisalluneed",
-   "martinvandriel",
-   "jpdavidpeters",
-   "aadithyanr_",
-   "Kapuster",
-   "theenioladada",
-   "just4rxxy",
-   "nicolasmertens",
-   "onerinas",
-   "hagen_hu",
-   "VictorRowanAi",
-   "_tenZdhon_",
-   "gspulse_",
-   "ZidaneZ08902030",
-   "Miracle_NNnn",
-   "boringdev77",
-   "devlikesbizness",
-   "arthaud_",
-   "ptremblay",
-   "punyakrit_22",
-   "BreeFlemings",
-   "0xteo",
-   "burconsult",
-   "jeffreybunn",
-   "sofiarxin",
-   "nifal_adam",
-   "VishnuSampathk1",
-   "miguelsaavedra",
-   "okardesler",
-   "itsloukman",
-   "imharikumaran",
-   "jizaymes",
-   "prabahankalita",
-   "notesbylouis",
-   "sklyarov",
-   "BenBlaiszik",
-   "camgruss",
-   "shanni_talks",
-   "Itz_Steavean",
-   "VivianChuk67172",
-   "PashaBorsai",
-   "daleverett",
-   "md_kadiwal",
-   "thehirenthakkar",
-   "dkshbuilds",
-   "NullContex1s",
-   "mathiaschpl",
-   "positronx_",
-   "Bhrigu_Sr",
-   "tinoscript",
-   "crisabuilds",
-   "nikunjkothiya",
-   "RasmusHjulskov",
-   "holfyio",
-   "Craig_Gigged",
-   "vitorviesi",
-   "BigBrother_Jane",
-   "sydneyysimone",
-   "thejohncinar",
-   "maxkalashnikoff",
-   "reeder1865",
-   "capt_sherman",
-   "ammar_nassri",
-   "gamedevsam",
-   "b1rkh0ff",
-   "melophile0646",
-   "TheSuryanshD",
-   "kinder_grinder",
-   "TheLexTimes",
-   "yesthatsnick",
-   "BasicallyBhav",
-   "nossesteve",
-   "RJPB25",
-   "MrSaaSBuilder",
-   "4guap0",
-   "izzHanu",
-   "sristhi_saha",
-   "RubyBrewsday",
-   "Tonna_X",
-   "AnthropicWay",
-   "heykandoi",
-   "chaz",
-   "maelus_",
-   "xcanchal",
-   "GauravAtavale",
-   "Devvora15",
-   "amazingdeals27",
-   "agrit_tiwari",
-   "rodgetech",
-   "shari1345",
-   "cpereztejada",
-   "Rilely",
-   "thsonvt",
-   "manishsainani",
-   "SkanderBlaiti",
-   "alvinding",
+   "_therayray",
+   "acecreamu",
+   "aimalysheva",
+   "alexatallah",
+   "alexcooldev",
+   "alyssakrejmas",
+   "anamika__x",
+   "andimarafioti",
+   "andrewchen",
+   "andruyeung",
+   "AnnaCher___",
+   "annasoreskin",
+   "AnnieLiao_2000",
+   "antinertia",
+   "athrix_codes",
+   "bcherny",
+   "benln",
+   "brycent",
+   "calixo888",
+   "chanankrivisky",
+   "cinamarina",
+   "codyschneider",
+   "cop_on_fire",
+   "coreyhainesco",
+   "cory",
+   "craviottx",
+   "cryptobuilder_",
+   "dabit3",
+   "denk_tweets",
+   "DhravyaShah",
+   "dinasaur_404",
+   "ekuyda",
+   "eriktorenberg",
+   "garrytan",
+   "GeorgeLampro20",
+   "hazhubble",
+   "HBCoop_",
+   "hellbetterthnsf",
+   "henrytdowling",
+   "HeyGen",
+   "humphreysu",
+   "ionleu",
+   "irabukht",
    "istgishaaaan",
-   "ritesh_khokhani",
-   "madhugogineni97",
-   "RDMellish",
-   "mmhfdz",
-   "alirtariq",
-   "ryanam26",
-   "iittebagilanii",
-   "thiruk2014",
-   "johnsw",
-   "alexmuresan_com",
-   "JackWagner54",
-   "TyGame",
-   "jordanschenck",
-   "DrGlorioso",
-   "amguzzi",
-   "SymbiosAi",
-   "apvarun",
-   "Jadagoudar",
-   "PlotnikovDev",
-   "brewedinpixels",
-   "clay_phi",
-   "batjko_pat",
-   "daniel_rich",
-   "Quaxguy",
-   "jgreen_us",
-   "tryderrick",
-   "justkarangupta",
-   "F_inRich",
-   "prafull",
-   "voiceaispace",
-   "gharik",
-   "mgolteez",
-   "MikeWigmore",
-   "shikaku_maru_ke",
-   "BA_Wolf",
-   "filgran_",
-   "jordanjoecooper",
-   "VladTerin",
-   "SecureByDsgn",
-   "RubenHorbach",
-   "paradoxrenders",
-   "AskRayan",
-   "zalmanlew",
-   "khookhar"
+   "ivanburazin",
+   "ivanidze404",
+   "jakezward",
+   "jfischoff",
+   "JNYBGR",
+   "jojodecayz",
+   "juliafedorin",
+   "khookhar",
+   "konstipaulus",
+   "korablev",
+   "kseniam0s",
+   "levan",
+   "Madisonkanna",
+   "majamediaco",
+   "majidawan764334",
+   "MarkKnd",
+   "mattyp",
+   "maxemitchell",
+   "mlejva",
+   "morgancheatham",
+   "nestymee",
+   "nicogutis",
+   "notmiramurati",
+   "oliverbrocato",
+   "ParadigmEng420",
+   "pcshipp",
+   "Peter_Soida",
+   "pmitu",
+   "positronx_",
+   "realAdamLevi",
+   "robrombach",
+   "rom1trs",
+   "rork",
+   "SaaiArora",
+   "sergeynazarovx",
+   "shari1345",
+   "sobedominik",
+   "sonofalli",
+   "tbpn",
+   "tereza_tizkova",
+   "TheSuryanshD",
+   "tinasang",
+   "tomaxwell",
+   "utpalnadiger",
+   "uuuuuulala",
+   "whysoslimm",
+   "WillHobick",
+   "Winterrose",
+   "yanabana",
+   "noahrshinn",
+   "CompleteSkeptic",
+   "AdamNeumann",
+   "rrhoover",
+   "willbakerships",
+   "katiekirsch",
+   "theacademysf",
+   "typesafeai",
+   "steipete",
+   "MTSlive",
+   "romanugarte_",
+   "nico_laqua",
+   "jxnlco",
+   "HyperFrames_",
+   "DavidSHolz",
+   "Bencera",
+   "mattshumer_",
+   "will_marq",
+   "theo",
+   "mon__lim",
+   "louis030195",
+   "JessLozanoS",
+   "jeffreykWNDR",
+   "EmilyHerrera",
+   "ankurnagpal",
+   "allegrajacchia",
+   "talmagejohnson_",
+   "suraj_sharma14",
+   "SherryYanJiang",
+   "samuel_spitz",
+   "paularambles",
+   "marcus_lowe",
+   "liu8in",
+   "justingordon212",
+   "joshkim",
+   "illscience",
+   "hollllyli",
+   "FarzaTV",
+   "emmasteuer1",
+   "EGafni",
+   "cosign",
+   "amorriscode",
+   "AlexanderTw33ts",
+   "0interestrates",
+   "stephenmruiz",
+   "svemyh",
+   "Suhail",
+   "rabois",
+   "mattpocockuk",
+   "kentcdodds",
+   "ahmadaccino",
+   "trq212",
+   "ShaanVP",
+   "semil",
+   "pitdesi",
+   "lennysan",
+   "jarredsumner",
+   "jaltma",
+   "willdepue",
+   "vitaliidodonov",
+   "tylertaewook",
+   "Thom_Wolf",
+   "thisiskp_",
+   "thekitze",
+   "TejasKumar_",
+   "TaliaGold",
+   "shiraeis",
+   "scottastevenson",
+   "sarthakgh",
+   "samsheffer",
+   "poteto",
+   "PeterRahal",
+   "paycale",
+   "PabloAntonio",
+   "lukeharries",
+   "joshsuggss",
+   "johnschulman2",
+   "jackmcclelland",
+   "illyism",
+   "gokulr",
+   "dariusdan",
+   "cwdegnan",
+   "blakeir",
+   "AniC_dev",
+   "NadavKeyson",
+   "bankof_amERICA",
+   "TurnerNovak",
+   "thesamparr",
+   "ThePrimeagen",
+   "signulll",
+   "petergyang",
+   "omooretweets",
+   "NWischoff",
+   "nathanfielder",
+   "GavinSBaker",
+   "bot",
+   "austin_rief"
   ],
   "segments": {
-   "mrinalikamath": [
-    "sf",
-    "founder"
-   ],
-   "quasa0": [
-    "sf",
-    "builder"
-   ],
-   "annieqyang": [
-    "builder"
-   ],
-   "utpalnadiger": [
-    "sf",
-    "builder"
-   ],
-   "antopatrex1": [
+   "1clawai": [
+    "seed",
     "sf"
    ],
-   "adiabaticgarden": [
-    "sf"
-   ],
-   "paulina_laba": [
-    "sf",
-    "founder"
-   ],
-   "aalaprag": [
-    "builder"
-   ],
-   "sigmagirlgrind": [
-    "sf",
-    "founder"
-   ],
-   "peter_soida": [
-    "sf",
-    "founder"
-   ],
-   "lifegetsdicey": [
-    "sf",
-    "founder"
-   ],
-   "saaiarora": [
-    "sf",
-    "founder"
-   ],
-   "elijahuwas": [
-    "founder",
-    "builder"
-   ],
-   "rakibulism": [
-    "founder",
-    "builder"
-   ],
-   "mrbrjan": [
-    "founder",
-    "builder"
-   ],
-   "vince_builds": [
-    "builder"
-   ],
-   "tife_olayinka": [
-    "builder"
-   ],
-   "pequelord": [
-    "founder"
-   ],
-   "rethink_hub": [
-    "builder"
-   ],
-   "nefer_l": [
-    "builder"
-   ],
-   "akilastudiocom": [
-    "builder"
-   ],
-   "behfar_i": [
-    "builder"
-   ],
-   "manavsehgal": [
-    "sf",
-    "founder"
-   ],
-   "tracymassaro_": [
-    "sf"
-   ],
-   "velascode_": [
-    "sf",
-    "builder",
-    "founder"
-   ],
-   "vpanev27435": [
-    "builder"
-   ],
-   "aurelienbbn": [
-    "builder"
-   ],
-   "hameedraha": [
-    "founder"
-   ],
-   "zawadzki_diana": [
-    "sf",
-    "builder"
-   ],
-   "dantegaleazzi": [
-    "founder",
-    "builder"
-   ],
-   "christophersaum": [
-    "founder",
-    "builder"
-   ],
-   "mindinpanic": [
-    "builder"
-   ],
-   "samseely": [
-    "founder"
-   ],
-   "spatocodex": [
-    "builder"
-   ],
-   "areai51": [
-    "builder"
-   ],
-   "sdrth": [
-    "builder"
-   ],
-   "gianthologist": [
-    "builder"
-   ],
-   "richchetwynd": [
-    "builder"
-   ],
-   "faizan10114": [
-    "builder"
-   ],
-   "gracegong": [
-    "sf"
-   ],
-   "rad_hardened": [
-    "founder"
-   ],
-   "danielprevoznik": [
-    "builder"
-   ],
-   "dmarcosm98": [
-    "builder"
-   ],
-   "mdalishanali2": [
-    "builder"
-   ],
-   "wudoudo50287": [
-    "builder"
+   "_therayray": [
+    "seed"
    ],
    "acecreamu": [
-    "sf",
-    "founder"
+    "seed",
+    "sf"
    ],
-   "teesmmm": [
-    "founder"
+   "aimalysheva": [
+    "seed",
+    "sf"
    ],
-   "hakimuddinkika": [
-    "builder"
+   "alexatallah": [
+    "seed"
    ],
-   "admiretheweb": [
-    "builder"
+   "alexcooldev": [
+    "seed"
    ],
-   "jamie_maguire1": [
-    "builder"
+   "alyssakrejmas": [
+    "seed",
+    "sf"
    ],
-   "verbove": [
-    "builder"
+   "anamika__x": [
+    "seed"
    ],
-   "13doots": [
-    "founder"
+   "andimarafioti": [
+    "seed"
    ],
-   "luna9xoff": [
-    "founder"
+   "andrewchen": [
+    "seed"
    ],
-   "jilyannori": [
-    "builder"
+   "andruyeung": [
+    "seed"
    ],
-   "gauravgoyalai": [
-    "builder"
+   "annacher___": [
+    "seed",
+    "sf"
    ],
-   "aryshriv": [
-    "sf",
-    "builder",
-    "founder"
+   "annasoreskin": [
+    "seed"
    ],
-   "nwitten": [
-    "builder"
+   "annieliao_2000": [
+    "seed"
    ],
-   "sikandar_lx": [
-    "builder"
+   "antinertia": [
+    "seed"
    ],
-   "popcata350599": [
-    "builder"
+   "athrix_codes": [
+    "seed"
    ],
-   "mubeenchatthaa": [
-    "builder"
+   "bcherny": [
+    "seed",
+    "sf"
+   ],
+   "benln": [
+    "seed"
+   ],
+   "brycent": [
+    "seed"
+   ],
+   "calixo888": [
+    "seed",
+    "sf"
    ],
    "chanankrivisky": [
-    "builder"
+    "seed"
    ],
-   "builtnewai": [
-    "sf",
-    "builder",
-    "founder"
+   "cinamarina": [
+    "seed"
    ],
-   "yashasgunderia": [
-    "founder",
-    "builder"
+   "codyschneider": [
+    "seed"
    ],
-   "kemiisf": [
+   "cop_on_fire": [
+    "seed"
+   ],
+   "coreyhainesco": [
+    "seed"
+   ],
+   "cory": [
+    "seed",
     "sf"
    ],
-   "edibudimilic": [
-    "founder"
+   "craviottx": [
+    "seed"
    ],
-   "lucky_uros": [
-    "builder"
+   "cryptobuilder_": [
+    "seed"
    ],
-   "avi11x": [
-    "builder"
+   "dabit3": [
+    "seed"
    ],
-   "hellosimar": [
-    "sf",
-    "founder"
+   "denk_tweets": [
+    "seed"
    ],
-   "whysumancode": [
-    "founder",
-    "builder"
-   ],
-   "branding_presh": [
-    "founder",
-    "builder"
-   ],
-   "momelavelle": [
-    "builder"
-   ],
-   "1clawai": [
+   "dhravyashah": [
+    "seed",
     "sf"
    ],
-   "soham_nayak04": [
-    "builder"
-   ],
-   "themingjie": [
-    "builder"
-   ],
-   "therobkennedy": [
-    "builder"
-   ],
-   "gaurabhmathure": [
-    "builder"
-   ],
-   "seeksteve": [
-    "builder"
-   ],
-   "kalin_t": [
-    "builder"
-   ],
-   "nicoloboschi": [
-    "builder"
-   ],
-   "tomi_roggio": [
-    "founder",
-    "builder"
-   ],
-   "md_ali21993": [
-    "founder",
-    "builder"
-   ],
-   "hamidreddit": [
-    "builder"
-   ],
-   "isuhofriday": [
-    "builder"
-   ],
-   "__melchen__": [
-    "sf",
-    "builder",
-    "founder"
-   ],
-   "khraminadianka": [
-    "sf",
-    "founder"
-   ],
-   "nav_gpt": [
-    "founder",
-    "builder"
-   ],
-   "edtadros": [
-    "builder"
-   ],
-   "drewwakefield5": [
-    "builder"
-   ],
-   "nomaanahmed": [
-    "founder"
-   ],
-   "____baran": [
-    "builder"
-   ],
-   "milesgr_": [
-    "builder"
-   ],
-   "jameslex": [
-    "builder"
-   ],
-   "attenisalluneed": [
-    "builder"
-   ],
-   "martinvandriel": [
-    "builder"
-   ],
-   "jpdavidpeters": [
-    "founder",
-    "builder"
-   ],
-   "aadithyanr_": [
-    "founder",
-    "builder"
-   ],
-   "kapuster": [
-    "founder",
-    "builder"
-   ],
-   "theenioladada": [
-    "founder",
-    "builder"
-   ],
-   "just4rxxy": [
-    "founder",
-    "builder"
-   ],
-   "nicolasmertens": [
-    "founder",
-    "builder"
-   ],
-   "onerinas": [
-    "founder",
-    "builder"
-   ],
-   "hagen_hu": [
-    "founder",
-    "builder"
-   ],
-   "victorrowanai": [
-    "founder",
-    "builder"
-   ],
-   "_tenzdhon_": [
-    "founder",
-    "builder"
-   ],
-   "gspulse_": [
-    "founder",
-    "builder"
-   ],
-   "zidanez08902030": [
-    "founder"
-   ],
-   "miracle_nnnn": [
-    "builder"
-   ],
-   "boringdev77": [
-    "builder"
-   ],
-   "devlikesbizness": [
-    "builder"
-   ],
-   "arthaud_": [
-    "founder"
-   ],
-   "ptremblay": [
-    "builder"
-   ],
-   "punyakrit_22": [
-    "builder"
-   ],
-   "breeflemings": [
-    "builder"
-   ],
-   "0xteo": [
-    "builder"
-   ],
-   "burconsult": [
-    "builder"
-   ],
-   "jeffreybunn": [
-    "builder"
-   ],
-   "sofiarxin": [
-    "builder"
-   ],
-   "nifal_adam": [
-    "builder"
-   ],
-   "vishnusampathk1": [
-    "founder"
-   ],
-   "miguelsaavedra": [
-    "builder"
-   ],
-   "okardesler": [
-    "sf",
-    "builder",
-    "founder"
-   ],
-   "itsloukman": [
-    "founder",
-    "builder"
-   ],
-   "imharikumaran": [
-    "founder",
-    "builder"
-   ],
-   "jizaymes": [
-    "founder",
-    "builder"
-   ],
-   "prabahankalita": [
-    "builder"
-   ],
-   "notesbylouis": [
-    "builder"
-   ],
-   "sklyarov": [
-    "builder"
-   ],
-   "benblaiszik": [
-    "builder"
-   ],
-   "camgruss": [
-    "founder",
-    "builder"
-   ],
-   "shanni_talks": [
-    "builder"
-   ],
-   "itz_steavean": [
-    "builder"
-   ],
-   "vivianchuk67172": [
-    "builder"
-   ],
-   "pashaborsai": [
-    "builder"
-   ],
-   "daleverett": [
-    "founder"
-   ],
-   "md_kadiwal": [
-    "builder"
-   ],
-   "thehirenthakkar": [
-    "builder"
-   ],
-   "dkshbuilds": [
-    "builder"
-   ],
-   "nullcontex1s": [
-    "builder"
-   ],
-   "mathiaschpl": [
-    "builder"
-   ],
-   "positronx_": [
-    "builder"
-   ],
-   "bhrigu_sr": [
-    "sf",
-    "builder",
-    "founder"
-   ],
-   "tinoscript": [
-    "builder"
-   ],
-   "crisabuilds": [
-    "builder"
-   ],
-   "nikunjkothiya": [
-    "builder"
-   ],
-   "rasmushjulskov": [
-    "builder"
-   ],
-   "holfyio": [
-    "builder"
-   ],
-   "craig_gigged": [
-    "founder"
-   ],
-   "vitorviesi": [
-    "founder"
-   ],
-   "bigbrother_jane": [
-    "founder",
-    "builder"
-   ],
-   "sydneyysimone": [
+   "dinasaur_404": [
+    "seed"
+   ],
+   "ekuyda": [
+    "seed",
     "sf"
    ],
-   "thejohncinar": [
-    "founder",
-    "builder"
-   ],
-   "maxkalashnikoff": [
-    "builder"
-   ],
-   "reeder1865": [
-    "builder"
-   ],
-   "capt_sherman": [
-    "builder"
-   ],
-   "ammar_nassri": [
-    "builder"
-   ],
-   "gamedevsam": [
-    "builder"
-   ],
-   "b1rkh0ff": [
-    "builder"
-   ],
-   "melophile0646": [
-    "builder"
-   ],
-   "thesuryanshd": [
-    "builder"
-   ],
-   "kinder_grinder": [
-    "founder",
-    "builder"
-   ],
-   "thelextimes": [
-    "founder",
-    "builder"
-   ],
-   "yesthatsnick": [
-    "builder"
-   ],
-   "basicallybhav": [
-    "builder"
-   ],
-   "nossesteve": [
-    "builder"
-   ],
-   "rjpb25": [
-    "builder"
-   ],
-   "mrsaasbuilder": [
-    "founder",
-    "builder"
-   ],
-   "4guap0": [
-    "founder",
-    "builder"
-   ],
-   "izzhanu": [
-    "founder",
-    "builder"
-   ],
-   "sristhi_saha": [
-    "builder"
-   ],
-   "rubybrewsday": [
-    "founder"
-   ],
-   "tonna_x": [
-    "builder"
-   ],
-   "anthropicway": [
-    "builder"
-   ],
-   "heykandoi": [
-    "builder"
-   ],
-   "chaz": [
-    "founder"
-   ],
-   "maelus_": [
-    "builder"
-   ],
-   "xcanchal": [
-    "founder"
-   ],
-   "gauravatavale": [
-    "builder"
-   ],
-   "devvora15": [
-    "builder"
-   ],
-   "amazingdeals27": [
-    "builder"
-   ],
-   "agrit_tiwari": [
-    "builder"
-   ],
-   "rodgetech": [
-    "builder"
-   ],
-   "shari1345": [
-    "builder"
-   ],
-   "cpereztejada": [
-    "builder"
-   ],
-   "rilely": [
+   "eriktorenberg": [
+    "seed",
     "sf"
    ],
-   "thsonvt": [
-    "builder"
+   "garrytan": [
+    "seed",
+    "sf"
    ],
-   "manishsainani": [
-    "founder",
-    "builder"
+   "georgelampro20": [
+    "seed"
    ],
-   "skanderblaiti": [
-    "builder"
+   "hazhubble": [
+    "seed",
+    "sf"
    ],
-   "alvinding": [
-    "builder"
+   "hbcoop_": [
+    "seed"
+   ],
+   "hellbetterthnsf": [
+    "seed",
+    "sf"
+   ],
+   "henrytdowling": [
+    "seed",
+    "sf"
+   ],
+   "heygen": [
+    "seed"
+   ],
+   "humphreysu": [
+    "seed"
+   ],
+   "ionleu": [
+    "seed"
+   ],
+   "irabukht": [
+    "seed",
+    "sf"
    ],
    "istgishaaaan": [
-    "builder"
+    "seed"
    ],
-   "ritesh_khokhani": [
-    "founder"
-   ],
-   "madhugogineni97": [
-    "builder"
-   ],
-   "rdmellish": [
-    "builder"
-   ],
-   "mmhfdz": [
-    "founder",
-    "builder"
-   ],
-   "alirtariq": [
-    "builder"
-   ],
-   "ryanam26": [
-    "builder"
-   ],
-   "iittebagilanii": [
-    "builder"
-   ],
-   "thiruk2014": [
-    "founder"
-   ],
-   "johnsw": [
-    "founder"
-   ],
-   "alexmuresan_com": [
-    "builder"
-   ],
-   "jackwagner54": [
-    "builder"
-   ],
-   "tygame": [
-    "builder"
-   ],
-   "jordanschenck": [
-    "builder"
-   ],
-   "drglorioso": [
-    "sf",
-    "founder"
-   ],
-   "amguzzi": [
-    "founder",
-    "builder"
-   ],
-   "symbiosai": [
-    "builder"
-   ],
-   "apvarun": [
-    "builder"
-   ],
-   "jadagoudar": [
-    "builder"
-   ],
-   "plotnikovdev": [
-    "builder"
-   ],
-   "brewedinpixels": [
-    "founder"
-   ],
-   "clay_phi": [
-    "builder"
-   ],
-   "batjko_pat": [
-    "founder"
-   ],
-   "daniel_rich": [
-    "builder"
-   ],
-   "quaxguy": [
-    "builder"
-   ],
-   "jgreen_us": [
-    "builder"
-   ],
-   "tryderrick": [
-    "builder"
-   ],
-   "justkarangupta": [
-    "builder"
-   ],
-   "f_inrich": [
-    "builder"
-   ],
-   "prafull": [
-    "builder"
-   ],
-   "voiceaispace": [
-    "builder"
-   ],
-   "gharik": [
-    "founder"
-   ],
-   "mgolteez": [
-    "builder"
-   ],
-   "mikewigmore": [
-    "builder"
-   ],
-   "shikaku_maru_ke": [
-    "builder"
-   ],
-   "ba_wolf": [
-    "sf",
-    "founder"
-   ],
-   "filgran_": [
+   "ivanburazin": [
+    "seed",
     "sf"
    ],
-   "jordanjoecooper": [
-    "builder"
+   "ivanidze404": [
+    "seed",
+    "sf"
    ],
-   "vladterin": [
-    "builder"
+   "jakezward": [
+    "seed"
    ],
-   "securebydsgn": [
-    "builder"
+   "jfischoff": [
+    "seed",
+    "sf"
    ],
-   "rubenhorbach": [
-    "builder"
+   "jnybgr": [
+    "seed"
    ],
-   "paradoxrenders": [
-    "builder"
+   "jojodecayz": [
+    "seed",
+    "sf"
    ],
-   "askrayan": [
-    "founder"
-   ],
-   "zalmanlew": [
-    "builder"
+   "juliafedorin": [
+    "seed",
+    "sf"
    ],
    "khookhar": [
-    "founder"
+    "seed"
+   ],
+   "konstipaulus": [
+    "seed"
+   ],
+   "korablev": [
+    "seed",
+    "sf"
+   ],
+   "kseniam0s": [
+    "seed"
+   ],
+   "levan": [
+    "seed"
+   ],
+   "madisonkanna": [
+    "seed",
+    "sf"
+   ],
+   "majamediaco": [
+    "seed",
+    "sf"
+   ],
+   "majidawan764334": [
+    "seed"
+   ],
+   "markknd": [
+    "seed",
+    "sf"
+   ],
+   "mattyp": [
+    "seed",
+    "sf"
+   ],
+   "maxemitchell": [
+    "seed",
+    "sf"
+   ],
+   "mlejva": [
+    "seed",
+    "sf"
+   ],
+   "morgancheatham": [
+    "seed"
+   ],
+   "nestymee": [
+    "seed"
+   ],
+   "nicogutis": [
+    "seed"
+   ],
+   "notmiramurati": [
+    "seed"
+   ],
+   "oliverbrocato": [
+    "seed"
+   ],
+   "paradigmeng420": [
+    "seed",
+    "sf"
+   ],
+   "pcshipp": [
+    "seed"
+   ],
+   "peter_soida": [
+    "seed",
+    "sf"
+   ],
+   "pmitu": [
+    "seed"
+   ],
+   "positronx_": [
+    "seed"
+   ],
+   "realadamlevi": [
+    "seed"
+   ],
+   "robrombach": [
+    "seed"
+   ],
+   "rom1trs": [
+    "seed"
+   ],
+   "rork": [
+    "seed",
+    "sf"
+   ],
+   "saaiarora": [
+    "seed",
+    "sf"
+   ],
+   "sergeynazarovx": [
+    "seed"
+   ],
+   "shari1345": [
+    "seed"
+   ],
+   "sobedominik": [
+    "seed"
+   ],
+   "sonofalli": [
+    "seed"
+   ],
+   "tbpn": [
+    "seed"
+   ],
+   "tereza_tizkova": [
+    "seed",
+    "sf"
+   ],
+   "thesuryanshd": [
+    "seed"
+   ],
+   "tinasang": [
+    "seed",
+    "sf"
+   ],
+   "tomaxwell": [
+    "seed",
+    "sf"
+   ],
+   "utpalnadiger": [
+    "seed",
+    "sf"
+   ],
+   "uuuuuulala": [
+    "seed"
+   ],
+   "whysoslimm": [
+    "seed",
+    "sf"
+   ],
+   "willhobick": [
+    "seed"
+   ],
+   "winterrose": [
+    "seed",
+    "sf"
+   ],
+   "yanabana": [
+    "seed",
+    "sf"
+   ],
+   "noahrshinn": [
+    "similar",
+    "sf"
+   ],
+   "completeskeptic": [
+    "similar"
+   ],
+   "adamneumann": [
+    "similar"
+   ],
+   "rrhoover": [
+    "similar",
+    "sf"
+   ],
+   "willbakerships": [
+    "similar"
+   ],
+   "katiekirsch": [
+    "similar",
+    "sf"
+   ],
+   "theacademysf": [
+    "similar",
+    "sf"
+   ],
+   "typesafeai": [
+    "similar"
+   ],
+   "steipete": [
+    "similar"
+   ],
+   "mtslive": [
+    "similar"
+   ],
+   "romanugarte_": [
+    "similar",
+    "sf"
+   ],
+   "nico_laqua": [
+    "similar",
+    "sf"
+   ],
+   "jxnlco": [
+    "similar",
+    "sf"
+   ],
+   "hyperframes_": [
+    "similar",
+    "sf"
+   ],
+   "davidsholz": [
+    "similar",
+    "sf"
+   ],
+   "bencera": [
+    "similar",
+    "sf"
+   ],
+   "mattshumer_": [
+    "similar"
+   ],
+   "will_marq": [
+    "similar",
+    "sf"
+   ],
+   "theo": [
+    "similar",
+    "sf"
+   ],
+   "mon__lim": [
+    "similar",
+    "sf"
+   ],
+   "louis030195": [
+    "similar",
+    "sf"
+   ],
+   "jesslozanos": [
+    "similar"
+   ],
+   "jeffreykwndr": [
+    "similar"
+   ],
+   "emilyherrera": [
+    "similar"
+   ],
+   "ankurnagpal": [
+    "similar"
+   ],
+   "allegrajacchia": [
+    "similar"
+   ],
+   "talmagejohnson_": [
+    "similar",
+    "sf"
+   ],
+   "suraj_sharma14": [
+    "similar",
+    "sf"
+   ],
+   "sherryyanjiang": [
+    "similar",
+    "sf"
+   ],
+   "samuel_spitz": [
+    "similar",
+    "sf"
+   ],
+   "paularambles": [
+    "similar",
+    "sf"
+   ],
+   "marcus_lowe": [
+    "similar",
+    "sf"
+   ],
+   "liu8in": [
+    "similar",
+    "sf"
+   ],
+   "justingordon212": [
+    "similar",
+    "sf"
+   ],
+   "joshkim": [
+    "similar",
+    "sf"
+   ],
+   "illscience": [
+    "similar",
+    "sf"
+   ],
+   "hollllyli": [
+    "similar",
+    "sf"
+   ],
+   "farzatv": [
+    "similar",
+    "sf"
+   ],
+   "emmasteuer1": [
+    "similar",
+    "sf"
+   ],
+   "egafni": [
+    "similar",
+    "sf"
+   ],
+   "cosign": [
+    "similar",
+    "sf"
+   ],
+   "amorriscode": [
+    "similar",
+    "sf"
+   ],
+   "alexandertw33ts": [
+    "similar",
+    "sf"
+   ],
+   "0interestrates": [
+    "similar",
+    "sf"
+   ],
+   "stephenmruiz": [
+    "similar",
+    "sf"
+   ],
+   "svemyh": [
+    "similar"
+   ],
+   "suhail": [
+    "similar"
+   ],
+   "rabois": [
+    "similar"
+   ],
+   "mattpocockuk": [
+    "similar"
+   ],
+   "kentcdodds": [
+    "similar"
+   ],
+   "ahmadaccino": [
+    "similar"
+   ],
+   "trq212": [
+    "similar",
+    "sf"
+   ],
+   "shaanvp": [
+    "similar",
+    "sf"
+   ],
+   "semil": [
+    "similar",
+    "sf"
+   ],
+   "pitdesi": [
+    "similar",
+    "sf"
+   ],
+   "lennysan": [
+    "similar",
+    "sf"
+   ],
+   "jarredsumner": [
+    "similar",
+    "sf"
+   ],
+   "jaltma": [
+    "similar",
+    "sf"
+   ],
+   "willdepue": [
+    "similar"
+   ],
+   "vitaliidodonov": [
+    "similar"
+   ],
+   "tylertaewook": [
+    "similar"
+   ],
+   "thom_wolf": [
+    "similar"
+   ],
+   "thisiskp_": [
+    "similar"
+   ],
+   "thekitze": [
+    "similar"
+   ],
+   "tejaskumar_": [
+    "similar"
+   ],
+   "taliagold": [
+    "similar"
+   ],
+   "shiraeis": [
+    "similar"
+   ],
+   "scottastevenson": [
+    "similar"
+   ],
+   "sarthakgh": [
+    "similar"
+   ],
+   "samsheffer": [
+    "similar"
+   ],
+   "poteto": [
+    "similar"
+   ],
+   "peterrahal": [
+    "similar"
+   ],
+   "paycale": [
+    "similar"
+   ],
+   "pabloantonio": [
+    "similar"
+   ],
+   "lukeharries": [
+    "similar"
+   ],
+   "joshsuggss": [
+    "similar"
+   ],
+   "johnschulman2": [
+    "similar"
+   ],
+   "jackmcclelland": [
+    "similar"
+   ],
+   "illyism": [
+    "similar"
+   ],
+   "gokulr": [
+    "similar"
+   ],
+   "dariusdan": [
+    "similar"
+   ],
+   "cwdegnan": [
+    "similar"
+   ],
+   "blakeir": [
+    "similar"
+   ],
+   "anic_dev": [
+    "similar"
+   ],
+   "nadavkeyson": [
+    "similar"
+   ],
+   "bankof_america": [
+    "similar"
+   ],
+   "turnernovak": [
+    "similar"
+   ],
+   "thesamparr": [
+    "similar"
+   ],
+   "theprimeagen": [
+    "similar"
+   ],
+   "signulll": [
+    "similar"
+   ],
+   "petergyang": [
+    "similar"
+   ],
+   "omooretweets": [
+    "similar"
+   ],
+   "nwischoff": [
+    "similar"
+   ],
+   "nathanfielder": [
+    "similar"
+   ],
+   "gavinsbaker": [
+    "similar"
+   ],
+   "bot": [
+    "similar"
+   ],
+   "austin_rief": [
+    "similar"
    ]
   },
-  "built": "2026-09-30"
+  "built": "2026-10-01",
+  "source": "taste_build.py"
  }
 }

@@ -51,6 +51,12 @@ LOG = os.path.join(HERE, "logs", "bridge.log")
 T_SEARCH, T_USER, T_FOLLOWERS = ("mcp__claude_ai_X__twitter_search", "mcp__claude_ai_X__twitter_get_user",
                                  "mcp__claude_ai_X__twitter_followers")
 QUEUE_EVERY, PROFILE_EVERY = 45 * 60, 60 * 60
+PAUSE_FILE = os.path.join(HERE, "logs", ".paused_until")
+PAUSE_HOURS = 6        # after a quota error, don't hammer the connector every 5 min
+
+
+class QuotaExceeded(Exception):
+    pass
 
 
 def log(msg):
@@ -87,6 +93,8 @@ def mcp(instructions, tool, timeout=240):
             try:
                 results.append(json.loads(body))
             except (TypeError, ValueError):
+                if re.search(r"exceeded the MONTHLY quota", str(body)):
+                    raise QuotaExceeded(str(body)[:200])
                 log(f"non-JSON tool result: {str(body)[:160]}")
     if not results:
         log(f"no tool results ({tool}): {p.stdout[-200:]} {p.stderr[-200:]}")
@@ -245,9 +253,24 @@ def main():
     except OSError:
         return                                   # previous run still going
 
+    if os.path.exists(PAUSE_FILE) and time.time() < float(open(PAUSE_FILE).read() or 0) and not a.all:
+        return
+    try:
+        run(a)
+    except QuotaExceeded as e:
+        open(PAUSE_FILE, "w").write(str(time.time() + PAUSE_HOURS * 3600))
+        data = _core.load_data(HANDLE)
+        data.setdefault("bridge", {})["paused"] = {"until": time.time() + PAUSE_HOURS * 3600,
+                                                   "reason": "X connector monthly quota exhausted"}
+        _core.save_data(HANDLE, data)
+        log(f"QUOTA: pausing {PAUSE_HOURS}h — {e}")
+
+
+def run(a):
     cfg = _core.load_config()
     tz = _core.local_tz(cfg)
     data = _core.load_data(HANDLE)
+    data.setdefault("bridge", {}).pop("paused", None)
     st = data.setdefault("bridge", {})
     msg = []
     msg.append(f"tweets {sync_counts(cfg, data, tz)}")

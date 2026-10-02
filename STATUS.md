@@ -2,6 +2,15 @@
 
 **Created:** 2026-06-22
 
+## ⭐ Taste-based targets + ⚠️ connector quota (2026-10-01, late)
+- Anna didn't like the ICP picks. New `taste_build.py`: seeds = everyone she replied to in 7 days (`replied_users`, 94 people)
+  + ✨ similar = accounts followed by ≥3 seeds (2 pages of each seed's follows via the X connector). → targets.json
+  (94 ⭐ + 97 ✨, partial: the last following calls hit the quota). Queue mix seed .5 / similar .5, chips ⭐ ✨.
+  Report: `~/Developer/X growth/out/taste_targets_2026-10-01.md`.
+- ❌ This build exhausted **Sasha's X connector monthly quota** (RapidAPI `twitter241`, plan BASIC) — search stopped too.
+  xbridge now pauses 6h on a quota error (`logs/.paused_until`) and the page shows "Sync paused…" / "Last sync N min ago".
+  Data source options: Sasha upgrades the RapidAPI plan, or top up twitterapi.io and set `remote_fetch: True`.
+
 ## 🌉 Bridge (2026-10-01) — ✅ LIVE: prod no longer uses twitterapi.io
 - `remote_fetch: False` → prod never calls twitterapi.io, only serves KV. **`xbridge.py`** on Anna's Mac feeds KV:
   X data from Sasha's claude.ai X connector (`mcp__claude_ai_X__*`) via headless `claude -p --model haiku`

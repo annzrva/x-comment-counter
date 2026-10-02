@@ -73,7 +73,8 @@ DEFAULT_CONFIG = {
     "suggest_model": "anthropic/claude-sonnet-5.5",
     "suggest_daily_cap": 300,        # max generations/day across the app
     # ICP mix (share of the queue per primary segment in targets.json). Anna is in SF → SF weighted up.
-    "queue_mix": {"sf": 0.35, "builder": 0.30, "founder": 0.25, "reach": 0.10},
+    # taste list (taste_build.py): ⭐ people she replies to + ✨ similar accounts, half and half
+    "queue_mix": {"seed": 0.5, "similar": 0.5, "sf": 0.35, "builder": 0.30, "founder": 0.25, "reach": 0.10},
     # Where X data comes from. False = prod never calls twitterapi.io; the Mac-side bridge (xbridge.py,
     # Sasha's X connector via `claude -p`) writes fresh data straight into KV and prod just serves it.
     "remote_fetch": False,
@@ -693,6 +694,7 @@ def build_state(cfg, handle, data):
         "graph": graph,
         "growth": build_growth(cfg, data, tz),
         "replied_ids": list(data.get("replied", {}).keys()),
+        "sync_paused": (data.get("bridge") or {}).get("paused"),
         "last_refresh": data.get("last_refresh"),
     }
 

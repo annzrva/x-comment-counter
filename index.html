@@ -483,7 +483,15 @@ function chime(s){
   if(np>0) setTimeout(()=>{SFX.post();emitDisc($('p-num'));
     $('p-num').classList.add('pop');setTimeout(()=>$('p-num').classList.remove('pop'),520);},Math.max(0,nc)*260+150);
 }
+function syncWarn(s){
+  // bridge-fed prod: say so when numbers are stale instead of silently freezing
+  const age=s.last_refresh?(Date.now()-new Date(s.last_refresh))/6e4:1e9;
+  if(s.sync_paused) apiWarn('Sync paused: '+s.sync_paused.reason+' — numbers are from '+new Date(s.last_refresh).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}));
+  else if(age>30) apiWarn('Last sync '+Math.round(age)+' min ago — is the Mac asleep?');
+  else apiWarn(null);
+}
 function applyState(s){
+  try{syncWarn(s);}catch(e){}
   try{chime(s);}catch(e){}
   STATE=s; CUR=s.handle;
   localStorage.setItem('ccx_handle',CUR);
@@ -652,7 +660,7 @@ function qMarks(){try{return JSON.parse(localStorage.getItem(qKey())||'{}');}cat
 function qMark(id,v){const m=qMarks(); m[id]=v;
   const ids=Object.keys(m); if(ids.length>600) ids.slice(0,ids.length-600).forEach(k=>delete m[k]);
   try{localStorage.setItem(qKey(),JSON.stringify(m));}catch(e){} renderQueue();}
-const SEGI={sf:'🌉',builder:'🛠',founder:'🚀',reach:'📣'};
+const SEGI={seed:'⭐',similar:'✨',sf:'🌉',builder:'🛠',founder:'🚀',reach:'📣'};
 const ago=c=>{const h=(Date.now()-new Date(c))/36e5; return h<1?Math.max(1,Math.round(h*60))+'m':Math.round(h)+'h';};
 const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 async function loadQueue(force){
@@ -984,7 +992,7 @@ let lastActive=Date.now(), polling=false;
 setInterval(async()=>{
   if(polling||!CUR||!STATE||Date.now()-lastActive>IDLE_MS) return;
   polling=true;
-  try{const s=await fetchState({live:true}); if(s&&!s.error&&s.handle===CUR){applyState(s);apiWarn(null);} else if(s&&s.error) apiWarn(s.error);}
+  try{const s=await fetchState({live:true}); if(s&&!s.error&&s.handle===CUR){applyState(s);} else if(s&&s.error) apiWarn(s.error);}
   catch(e){} finally{polling=false;}
 },LIVE_MS);
 </script>

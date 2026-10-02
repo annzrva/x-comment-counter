@@ -2,6 +2,17 @@
 
 **Created:** 2026-06-22
 
+## 🌉 Bridge (2026-10-01) — ✅ LIVE: prod no longer uses twitterapi.io
+- `remote_fetch: False` → prod never calls twitterapi.io, only serves KV. **`xbridge.py`** on Anna's Mac feeds KV:
+  X data from Sasha's claude.ai X connector (`mcp__claude_ai_X__*`) via headless `claude -p --model haiku`
+  (only the one X tool allowed; raw tool results parsed from stream-json). KV creds: `.env.bridge` (vercel env pull, gitignored).
+- Every run: new tweets via `from:burninganna since_time:<last-5min>` (first run of day = full day, ~15 calls) → counts by
+  tweet id (`data.bridge.seen`, only for "full days"), replied ids/users, "?" share. Hourly: profile + followers diff (50 newest).
+  Every 45 min: reply queue (14 OR-searches, 4 parallel; avatars from icp_build cache). ≈8s per quick run, ~3.5 min full.
+- First run 2026-10-01 20:54: 68 comments (prod had frozen at 13), 1,760 followers, +3 new followers, 250-post queue.
+- Schedule: every 5 min via launchd `ai.varg.xbridge` — Anna installs it (agent isn't allowed to create LaunchAgents).
+- Downsides: works only while the Mac is on/awake; other handles on the public site show "isn't tracked right now".
+
 ## ⚠️ 2026-10-01 — twitterapi.io credits ran out (402 "Credits is not enough")
 Prod froze at 13 comments (last refresh 14:00 PT) — the page silently showed stale numbers. Burned by: 2 ICP builds
 (~1.5k calls), the reply queue (~28 calls per refresh), follower checks, live polls.

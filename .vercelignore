@@ -15,3 +15,6 @@ config.json
 logs/
 ideas_batch.py
 ai.varg.xideas.plist
+.env.bridge
+xbridge.py
+ai.varg.xbridge.plist

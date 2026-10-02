@@ -31,6 +31,7 @@
     "founder": 0.25,
     "reach": 0.1
   },
+  "remote_fetch": false,
   "cache_ttl_minutes": 360,
   "new_handle_backfill_days": 14,
   "daily_call_cap": 1500,

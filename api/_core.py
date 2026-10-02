@@ -74,6 +74,9 @@ DEFAULT_CONFIG = {
     "suggest_daily_cap": 300,        # max generations/day across the app
     # ICP mix (share of the queue per primary segment in targets.json). Anna is in SF → SF weighted up.
     "queue_mix": {"sf": 0.35, "builder": 0.30, "founder": 0.25, "reach": 0.10},
+    # Where X data comes from. False = prod never calls twitterapi.io; the Mac-side bridge (xbridge.py,
+    # Sasha's X connector via `claude -p`) writes fresh data straight into KV and prod just serves it.
+    "remote_fetch": False,
     # ── public cost controls ──
     "cache_ttl_minutes": 360,        # a handle's data is "fresh" for this long → no API call
     "new_handle_backfill_days": 14,  # history depth fetched the first time a handle is seen (matches the 14-day heatmap)
@@ -768,18 +771,34 @@ def _post_score(age_h, likes, replies):
     return velocity * visibility * fresh
 
 
+def queue_queries(cfg, targets):
+    hours, chunk = cfg.get("queue_hours", 16), cfg.get("queue_chunk", 16)
+    return ["(" + " OR ".join(f"from:{h}" for h in targets[i:i + chunk]) +
+            f") -filter:replies -filter:retweets within_time:{hours}h"
+            for i in range(0, len(targets), chunk)]
+
+
 def fetch_queue(cfg, targets, segments=None):
-    hours = cfg.get("queue_hours", 16)
-    now = datetime.now(timezone.utc)
-    chunk = cfg.get("queue_chunk", 16)
-    items, seen = [], set()
-    for i in range(0, len(targets), chunk):
-        group = targets[i:i + chunk]
-        q = "(" + " OR ".join(f"from:{h}" for h in group) + f") -filter:replies -filter:retweets within_time:{hours}h"
+    tweets = []
+    for q in queue_queries(cfg, targets):
         cursor = ""
         for _ in range(cfg.get("queue_pages", 2)):
             data = search(q, cursor)
-            for t in data.get("tweets") or []:
+            tweets += data.get("tweets") or []
+            if not data.get("has_next_page") or not data.get("next_cursor"):
+                break
+            cursor = data["next_cursor"]
+    return build_queue(cfg, tweets, segments)
+
+
+def build_queue(cfg, tweets, segments=None):
+    """twitterapi-shaped tweets → ranked, per-author-capped, ICP-mixed queue items."""
+    hours = cfg.get("queue_hours", 16)
+    now = datetime.now(timezone.utc)
+    items, seen = [], set()
+    if True:
+        if True:
+            for t in tweets:
                 tid = str(t.get("id"))
                 if tid in seen or t.get("isReply"):
                     continue
@@ -804,9 +823,6 @@ def fetch_queue(cfg, targets, segments=None):
                     "likes": likes, "replies": replies, "views": t.get("viewCount"),
                     "score": round(_post_score(age, likes, replies), 3),
                 })
-            if not data.get("has_next_page") or not data.get("next_cursor"):
-                break
-            cursor = data["next_cursor"]
     items.sort(key=lambda x: x["score"], reverse=True)
     per, out = {}, []
     for it in items:  # max N per author so one prolific account can't flood the list
@@ -830,13 +846,15 @@ def get_queue(cfg, handle, force=False):
     if force and age_min is not None and age_min < cfg.get("queue_min_refresh_minutes", 3):
         force = False
     note = None
-    if stale or force:
+    if (stale or force) and cfg.get("remote_fetch", True):
         try:
             cached = _kv_json(key, {"ts": time.time(), "items": fetch_queue(cfg, targets, segments)})
         except BudgetExceeded:
             if not cached:
                 raise
             note = "budget"
+    if not cached:
+        return {"error": "Queue not synced yet — the bridge fills it within an hour."}
     data = load_data(handle)
     ideas = load_ideas()
     for it in cached["items"]:   # drafts pre-written by ideas_batch.py (Claude Code on Anna's Mac)
@@ -999,7 +1017,10 @@ def lookup(cfg, handle, force=False, cached_only=False, live=False):
     has_cache = bool(data.get("days"))
     note = None
     served_cached = True
-    if (force or not is_fresh(data, cfg)) and not (cached_only and has_cache):
+    if not cfg.get("remote_fetch", True):
+        if not has_cache:
+            raise InvalidHandle(f"@{handle} isn't tracked right now (live updates come from the owner's bridge).")
+    elif (force or not is_fresh(data, cfg)) and not (cached_only and has_cache):
         try:
             data = refresh(cfg, handle, data, live=live) if has_cache else first_fetch(cfg, handle, data)
             served_cached = False
@@ -1105,7 +1126,8 @@ class Handler(BaseHTTPRequestHandler):
         c = _with_graph(cfg, qs)
         # rate-limit only calls that may hit the API (no cache yet, or forced)
         data0 = load_data(handle)
-        will_fetch = (force or not is_fresh(data0, cfg)) and not (cached_only and data0.get("days"))
+        will_fetch = (cfg.get("remote_fetch", True) and (force or not is_fresh(data0, cfg))
+                      and not (cached_only and data0.get("days")))
         if will_fetch:
             ip = self.client_address[0]
             if not _rate_ok(ip, cfg):

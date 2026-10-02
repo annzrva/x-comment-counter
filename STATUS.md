@@ -2,6 +2,16 @@
 
 **Created:** 2026-06-22
 
+## 👍👎 Taste learning (2026-10-01) — ✅ LIVE
+- 👍/👎 on every queue post → `/api/vote?handle&id&v=1|-1|0` (only posts in her queue) → KV `cc:fb:<handle>`
+  {post id: v, author, text}. 👎 hides the post at once; 👍 again = undo.
+- Serve-time `rerank()`: author net votes (+50%/vote up to 3, ≤-2 = author hidden) × Claude **fit** score
+  (0.4–1.6 multiplier), then ICP/taste mix again.
+- Fit: `ideas_batch.py` (every 2h) asks haiku to rate unrated queue posts 0–10 against ≤25 liked (👍 + posts she
+  actually replied to) and ≤25 disliked examples; stored as `ideas.json[id].fit`. Drafts are written for highest-fit first.
+  First run: 208 posts scored from 42 liked / 0 disliked.
+- Next step idea: feed 👍/👎 authors into taste_build.py (add 👍 authors as seeds, drop 👎 authors).
+
 ## ⭐ Taste-based targets + ⚠️ connector quota (2026-10-01, late)
 - Anna didn't like the ICP picks. New `taste_build.py`: seeds = everyone she replied to in 7 days (`replied_users`, 94 people)
   + ✨ similar = accounts followed by ≥3 seeds (2 pages of each seed's follows via the X connector). → targets.json

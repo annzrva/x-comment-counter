@@ -210,6 +210,9 @@
   .qi .ac .sk{cursor:pointer;color:#9aa6cf}
   .qi .hot{color:#e0457b}
   .qi .ac .id{cursor:pointer;color:#a0306f}
+  .qi .ac .vt{cursor:pointer;filter:grayscale(1);opacity:.55;transition:.15s;font-size:14px}
+  .qi .ac .vt:hover{filter:none;opacity:1;transform:scale(1.15)}
+  .qi .ac .vt.on{filter:none;opacity:1}
   .ideas{display:flex;flex-direction:column;gap:6px;margin-top:4px}
   .idea{background:linear-gradient(180deg,#fff,#fff0fa);border:1.5px solid #ffd1ef;border-radius:12px;padding:7px 10px;
     font-size:13px;font-weight:500;color:#33457a;line-height:1.35;cursor:pointer;position:relative}
@@ -692,11 +695,14 @@ function renderQueue(){
         ${it.ideas&&OPEN_IDEAS.has(it.id)?ideasHtml(it):''}
         <div class="ac"><a href="${it.url}" target="_blank" rel="noopener" data-q="${it.id}">Reply ↗</a>
           <span>♥ ${fmt(it.likes)} · 💬 ${fmt(it.replies)}${hot}</span>
+          <span class="vt ${it.vote>0?'on':''}" data-vote="${it.id}:1" title="more like this">👍</span>
+          <span class="vt" data-vote="${it.id}:-1" title="not my thing — hide">👎</span>
           ${it.ideas?`<span class="id" data-ideas="${it.id}">💡 ${OPEN_IDEAS.has(it.id)?'hide':'ideas'}</span>`:''}
           ${st==='done'?'<span>✓ replied</span>':`<span class="sk" data-skip="${it.id}">skip</span>`}</div></div></div>`);
   });
   const left=QUEUE.items.length-done;
   $('q-meta').textContent=`${left} to reply · ${done} done/skipped · from ${QUEUE.targets} people · updated ${ago(new Date(QUEUE.ts*1000))} ago`
+    +(QUEUE.votes?` · learning from ${QUEUE.votes} 👍👎`:'')
     +(QUEUE.note==='budget'?' (daily API limit)':'');
   $('q-list').innerHTML=rows.join('')||'<div class="meta">All done 🎉 — hit “Fresh posts” later.</div>';
 }
@@ -707,6 +713,14 @@ function ideasHtml(it){
     <div class="meta">tap to copy · rewrite it your way</div></div>`;
 }
 $('q-list').addEventListener('click',e=>{
+  const vt=e.target.closest('[data-vote]'); if(vt){
+    const [id,v0]=vt.dataset.vote.split(':'); const it=QUEUE.items.find(x=>x.id===id); if(!it) return;
+    const v=(+v0>0&&it.vote>0)?0:+v0;                      // 👍 again = undo
+    if(v<0){ QUEUE.items=QUEUE.items.filter(x=>x.id!==id); SFX.click(); }   // 👎 hides right away
+    else it.vote=v;
+    fetch(`/api/vote?handle=${encodeURIComponent(CUR)}&id=${id}&v=${v}`).then(r=>r.json())
+      .then(d=>{ if(d.votes!=null){QUEUE.votes=d.votes; renderQueue();} }).catch(()=>{});
+    renderQueue(); return;}
   const i=e.target.closest('[data-ideas]'); if(i){const id=i.dataset.ideas; OPEN_IDEAS.has(id)?OPEN_IDEAS.delete(id):OPEN_IDEAS.add(id); renderQueue(); return;}
   const c=e.target.closest('[data-copy]'); if(c){const [id,k]=c.dataset.copy.split(':');
     const it=QUEUE.items.find(x=>x.id===id); if(it) navigator.clipboard.writeText(it.ideas[+k].text).catch(()=>{});

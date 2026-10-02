@@ -859,12 +859,68 @@ def get_queue(cfg, handle, force=False):
         return {"error": "Queue not synced yet — the bridge fills it within an hour."}
     data = load_data(handle)
     ideas = load_ideas()
-    for it in cached["items"]:   # drafts pre-written by ideas_batch.py (Claude Code on Anna's Mac)
-        if it["id"] in ideas:
-            it["ideas"] = ideas[it["id"]]["replies"]
+    fb = load_feedback(handle)
+    items = rerank(cfg, cached["items"], ideas, fb, segments)
     return {"handle": handle, "targets": len(targets), "ts": cached["ts"],
-            "items": cached["items"], "replied_ids": list(data.get("replied", {}).keys()),
-            "note": note}
+            "items": items, "replied_ids": list(data.get("replied", {}).keys()),
+            "votes": len(fb["posts"]), "note": note}
+
+
+# ── taste learning: 👍/👎 on queue posts ─────────────────────────────────
+
+def load_feedback(handle):
+    fb = _kv_json("cc:fb:" + handle) or {}
+    fb.setdefault("posts", {})
+    return fb
+
+
+def author_votes(fb):
+    net = {}
+    for v in fb["posts"].values():
+        a = (v.get("author") or "").lower()
+        net[a] = net.get(a, 0) + v.get("v", 0)
+    return net
+
+
+def rerank(cfg, items, ideas, fb, segments):
+    """Apply what we've learned: per-author votes + Claude's taste-fit score (ideas.json "fit", 0–10)."""
+    net = author_votes(fb)
+    out = []
+    for it in items:
+        it = dict(it)
+        meta = ideas.get(it["id"]) or {}
+        if meta.get("replies"):      # drafts pre-written by ideas_batch.py (Claude Code on Anna's Mac)
+            it["ideas"] = meta["replies"]
+        vote = (fb["posts"].get(it["id"]) or {}).get("v", 0)
+        a = net.get(it["handle"].lower(), 0)
+        if vote < 0 or a <= -2:      # disliked post, or an author she's thumbed down twice
+            continue
+        f = 1 + 0.5 * max(-1, min(a, 3))
+        if meta.get("fit") is not None:
+            it["fit"] = meta["fit"]
+            f *= 0.4 + 1.2 * meta["fit"] / 10
+        it["vote"] = vote
+        it["rank"] = it["score"] * f
+        out.append(it)
+    out.sort(key=lambda x: x["rank"], reverse=True)
+    return _mix(out, segments, cfg.get("queue_mix"))
+
+
+def vote(handle, tweet_id, v):
+    handle = sanitize_handle(handle)
+    q = _kv_json("cc:queue:" + handle)
+    item = next((i for i in (q or {}).get("items", []) if i["id"] == str(tweet_id)), None)
+    if not load_targets(handle)[0] or not item:
+        return {"error": "Post not in your reply queue."}
+    fb = load_feedback(handle)
+    if v == 0:
+        fb["posts"].pop(item["id"], None)
+    else:
+        fb["posts"][item["id"]] = {"v": 1 if v > 0 else -1, "author": item["handle"],
+                                   "text": item["text"][:300], "ts": time.time()}
+    _kv_json("cc:fb:" + handle, fb)
+    return {"ok": True, "votes": len(fb["posts"]),
+            "author_net": author_votes(fb).get(item["handle"].lower(), 0)}
 
 
 # ── reply ideas (AI Gateway) ──────────────────────────────────────────────
@@ -1098,6 +1154,17 @@ class Handler(BaseHTTPRequestHandler):
                     self._send(429, json.dumps({"error": "Slow down a sec."}))
                     return
                 self._send(200, json.dumps(get_queue(cfg, h, force)))
+            elif path == "/api/vote":
+                if not _rate_ok(self.client_address[0], dict(cfg, rate_per_ip_per_min=60)):
+                    self._send(429, json.dumps({"error": "Slow down a sec."}))
+                    return
+                h = qs.get("handle", [cfg["handle"]])[0]
+                tid = re.sub(r"\D", "", qs.get("id", [""])[0])
+                try:
+                    v = int(qs.get("v", ["0"])[0])
+                except ValueError:
+                    v = 0
+                self._send(200, json.dumps(vote(h, tid, v)))
             elif path == "/api/suggest":
                 if not _rate_ok(self.client_address[0], cfg):
                     self._send(429, json.dumps({"error": "Slow down a sec."}))
